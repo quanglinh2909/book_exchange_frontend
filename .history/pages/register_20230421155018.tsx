@@ -1,55 +1,22 @@
-import { authApi } from "@/api-client";
-import { setLoading } from "@/store";
-import { Stack, Button, Typography } from "@mui/material";
-import { enqueueSnackbar } from "notistack";
-import * as React from "react";
-import { useDispatch } from "react-redux";
+import { Stack } from '@mui/material';
+import * as React from 'react';
+import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useDispatch } from 'react-redux';
 
-export interface IRegisterProps {
+
+export interface IregisterProps {
 }
 
-export default function Register (props: IRegisterProps) {
+export default function register (props: IregisterProps) {
     const [email,setEmail] = useState('');
     const [pass,setPass] = useState('');
     const [name,setName] = useState('');
     const [phone, setPhone] = useState('');
-    //tets
-    const router = useRouter();
     const dispatch = useDispatch();
-    const handleRegister= async()=> {
-        dispatch(setLoading(true));
-
-        try {
-          if(!email){
-            enqueueSnackbar('Vui lòng nhập email', { variant: "error" });
-            return;
-    
-          }
-          if(!pass){
-            enqueueSnackbar('Vui lòng nhập password', { variant: "error" });
-            return;
-    
-          }
-          const { data } = await authApi.signUp({
-            email: email,
-            password: pass,
-            phone: phone,
-            name: name,
-          });
-          enqueueSnackbar("Đăng ký thành công", { variant: "success" });router.push('/login');
-        } catch (error: any) {
-          console.log(error);
-          if (error?.response?.data?.message) {
-            enqueueSnackbar(error?.response?.data?.message, { variant: "error" });
-          } else {
-            enqueueSnackbar(error?.message, { variant: "error" });
-          }
-        } finally {
-          dispatch(setLoading(false));
-        }
+    const handleRegister= ()=> {
 
     }
   return (

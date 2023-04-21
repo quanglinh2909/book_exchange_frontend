@@ -16,7 +16,6 @@ export default function Register (props: IRegisterProps) {
     const [pass,setPass] = useState('');
     const [name,setName] = useState('');
     const [phone, setPhone] = useState('');
-    //tets
     const router = useRouter();
     const dispatch = useDispatch();
     const handleRegister= async()=> {
