@@ -2,7 +2,6 @@ import { Stack } from '@mui/material';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 
 
 export interface IregisterProps {
@@ -43,7 +42,6 @@ export default function register (props: IregisterProps) {
           autoComplete="current-password"
         />
         </Stack>
-        <Button variant="outlined">Đăng ký</Button>
     </Stack>
   );
 }

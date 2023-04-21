@@ -42,8 +42,8 @@ export default function register (props: IregisterProps) {
           type="password"
           autoComplete="current-password"
         />
+         <Button variant="contained">Đăng ký</Button>
         </Stack>
-        <Button variant="outlined">Đăng ký</Button>
     </Stack>
   );
 }
