@@ -5,5 +5,5 @@ export interface UserLoginPayload {
 
 export interface UserRegisterPayload {
   email: string;
-  password: string;phone: string;name: string;
+  password: string;phone: string;
 }

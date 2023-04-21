@@ -8,10 +8,10 @@ import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-export interface IRegisterProps {
+export interface IregisterProps {
 }
 
-export default function Register (props: IRegisterProps) {
+export default function register (props: IregisterProps) {
     const [email,setEmail] = useState('');
     const [pass,setPass] = useState('');
     const [name,setName] = useState('');

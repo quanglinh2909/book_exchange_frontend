@@ -6,19 +6,17 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
-import { useRouter } from "next/router";
 
-export interface IRegisterProps {
+export interface IregisterProps {
 }
 
-export default function Register (props: IRegisterProps) {
+export default function register (props: IregisterProps) {
     const [email,setEmail] = useState('');
     const [pass,setPass] = useState('');
     const [name,setName] = useState('');
     const [phone, setPhone] = useState('');
-    const router = useRouter();
     const dispatch = useDispatch();
-    const handleRegister= async()=> {
+    const handleRegister= ()=> {
         dispatch(setLoading(true));
 
         try {
@@ -32,13 +30,11 @@ export default function Register (props: IRegisterProps) {
             return;
     
           }
-          const { data } = await authApi.signUp({
+          const { data } = await authApi.login({
             email: email,
             password: pass,
-            phone: phone,
-            name: name,
           });
-          enqueueSnackbar("Đăng ký thành công", { variant: "success" });router.push('/login');
+          enqueueSnackbar("Đăng nhập thành công", { variant: "success" });
         } catch (error: any) {
           console.log(error);
           if (error?.response?.data?.message) {
