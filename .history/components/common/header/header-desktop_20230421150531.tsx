@@ -191,9 +191,9 @@ export default function HeaderDesktop (props: IHeaderDesktopProps) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <span style={{fontSize:"18px"}}>Đăng nhập</span>
-                <span >|</span>
-                <span style={{fontSize:"18px"}}>Đăng ký</span>
+                <span style={{fontSize:"16px"}}>Đăng nhập</span>
+                <span style={{fontSize:"16px"}}>|</span>
+              <span>Đăng ký</span>
             <IconButton
               size="large"
               edge="end"
