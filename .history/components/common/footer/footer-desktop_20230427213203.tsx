@@ -54,7 +54,7 @@ export default function FooterDesktop() {
         <div className="legal">
           <a href="#">Terms & Conditions</a><a href="#">Privacy Policy</a>
         </div>
-        <div className="copyright">2023 Star dev</div>
+        <div className="copyright">2021 Copyright &copy; Sean B</div>
       </div>
     </footer>
   );

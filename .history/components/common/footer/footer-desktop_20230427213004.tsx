@@ -2,10 +2,11 @@
 import React from "react";
 
 export default function FooterDesktop() {
+  const router = useRouter();
   return (
     <footer>
-      <div className="top">
-        <div className="pages">
+      <div class="top">
+        <div class="pages">
           <ul>
             <h3>Brand Name</h3>
             <li><a href="#">Home</a></li>
@@ -29,7 +30,7 @@ export default function FooterDesktop() {
             <li><a href="#">Our Values</a></li>
           </ul>
         </div>
-        <div className="newsletter">
+        <div class="newsletter">
           <h3>Stay in Touch</h3>
           <form>
             <input
@@ -42,19 +43,19 @@ export default function FooterDesktop() {
           </form>
         </div>
       </div>
-      <div className="social">
-        <i className="fab fa-linkedin"></i>
-        <i className="fab fa-github"></i>
-        <i className="fab fa-facebook"></i>
-        <i className="fab fa-instagram"></i>
-        <i className="fab fa-twitter"></i>
-        <i className="fab fa-youtube"></i>
+      <div class="social">
+        <i class="fab fa-linkedin"></i>
+        <i class="fab fa-github"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-youtube"></i>
       </div>
-      <div className="info">
-        <div className="legal">
+      <div class="info">
+        <div class="legal">
           <a href="#">Terms & Conditions</a><a href="#">Privacy Policy</a>
         </div>
-        <div className="copyright">2023 Star dev</div>
+        <div class="copyright">2021 Copyright &copy; Sean B</div>
       </div>
     </footer>
   );
