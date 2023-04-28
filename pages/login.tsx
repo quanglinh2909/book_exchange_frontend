@@ -1,11 +1,10 @@
 import { authApi } from "@/api-client";
 import { setLoading } from "@/store";
-import { Stack, Button, Typography } from "@mui/material";
+import { Stack, Button, Typography, Link } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/joy/Checkbox';
 import { useState } from "react";
 
 export interface ILoginProps {}
@@ -23,6 +22,7 @@ export default function Login(props: ILoginProps) {
         return;
 
       }
+      
       if(!pass){
         enqueueSnackbar('Vui lòng nhập password', { variant: "error" });
         return;
@@ -57,7 +57,7 @@ export default function Login(props: ILoginProps) {
       
 
     }}> 
-      <Typography variant="h3" padding={'5px 0 10px 0'}>Sign IN</Typography> 
+      <Typography variant="h3" padding={'5px 0 10px 0'}>SignIn</Typography> 
       <TextField
           required
           id="outlined-required"
@@ -65,6 +65,7 @@ export default function Login(props: ILoginProps) {
           sx={{width:"100%",margin:3}}
           onChange={(e)=> setEmail(e.target.value)}
           value={email}
+        
 
         />
       <TextField
@@ -72,11 +73,21 @@ export default function Login(props: ILoginProps) {
           label="Password"
           type="password"
           autoComplete="current-password"
-          sx={{width:"100%",marginBottom:3}}
+          sx={{width:"100%",marginBottom:1}}
           onChange={(e)=> setpass(e.target.value)}
           value={pass}
         />
-      <Button variant="contained" onClick={handleLogin} >Đăng Nhập</Button>
+        <Link href="#" underline="hover" sx={{marginBottom:1}}>
+        Forgot password ? 
+      </Link>
+      <Button variant="contained" sx={{marginBottom:1,width:"100%"}} onClick={handleLogin} >Đăng Nhập</Button>
+      
+      <Typography sx={{marginBottom:2}}> Or Sign Up Using</Typography>
+
+      <Link href="#" underline="hover" sx={{marginBottom:1,width:"100%"}}>
+      <Button variant="contained"sx={{marginBottom:1,width:"100%"}} >Đăng Ký</Button>
+      </Link>
+      
     </Stack>
     </Stack>
     
