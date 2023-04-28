@@ -9,7 +9,7 @@ export interface IhomepageProps {
 
 export default function homepage (props: IhomepageProps) {
   return (
-    <Stack sx={{overflowX:'hidden'}}>
+    <Stack>
         <Header />
         <BodyHome/>
         <Footer/>

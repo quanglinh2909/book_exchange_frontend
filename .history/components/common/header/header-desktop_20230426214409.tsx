@@ -191,9 +191,9 @@ export default function HeaderDesktop (props: IHeaderDesktopProps) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <Typography sx={{fontSize:"18px", cursor:'pointer'}}>Đăng nhập</Typography>
+                <Typography style={{fontSize:"18px"}}>Đăng nhập</Typography>
                 <Typography sx={{margin:'0 8px'}} >|</Typography>
-                <Typography sx={{fontSize:"18px", cursor:'pointer'}}>Đăng ký</Typography>
+                <Typography style={{fontSize:"18px"}}>Đăng ký</Typography>
             <IconButton
               size="large"
               edge="end"
