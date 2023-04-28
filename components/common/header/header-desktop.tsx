@@ -1,71 +1,76 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
+import * as React from "react";
+import { styled, alpha } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import Link from "next/link";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 
+export interface IHeaderDesktopProps {}
 
-export interface IHeaderDesktopProps {
-}
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
-    width: 'auto',
+    width: "auto",
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
+  color: "inherit",
+  "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
     },
+    onclick: ()=> {alert(123)}
   },
 }));
 
-
-
-export default function HeaderDesktop (props: IHeaderDesktopProps) {
+export default function HeaderDesktop(props: IHeaderDesktopProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+    const [isSearch, setIsSearch]= React.useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -87,19 +92,19 @@ export default function HeaderDesktop (props: IHeaderDesktopProps) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -109,19 +114,19 @@ export default function HeaderDesktop (props: IHeaderDesktopProps) {
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
@@ -178,25 +183,104 @@ export default function HeaderDesktop (props: IHeaderDesktopProps) {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{ display: { xs: "none", sm: "block" } }}
           >
             Book Exchange
           </Typography>
-          <Search>
+          <Search onClick={()=> setIsSearch(!setIsSearch)}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
             />
+            {isSearch && 
+          
+                      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', display: 'none' }}>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Sách 1" src="" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Brunch this weekend?"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          Sách 1
+                        </Typography>
+                        {' — Mô tả sách 3'}
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Sách 2" src="" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Summer BBQ"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          Sách 2
+                        </Typography>
+                        {" — Mô tả sách 2"}
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Sách 3" src="" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Oui Oui"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: 'inline' }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          Sách 3
+                        </Typography>
+                        {' — Mô tả sách 3'}
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+              </List>
             
+            }
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <Typography sx={{fontSize:"18px", cursor:'pointer'}}>Đăng nhập</Typography>
-                <Typography sx={{margin:'0 8px'}} >|</Typography>
-                <Typography sx={{fontSize:"18px", cursor:'pointer'}}>Đăng ký</Typography>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Link href="/login">
+              <Typography sx={{ fontSize: "18px", cursor: "pointer" }}>
+                Đăng nhập
+              </Typography>
+            </Link>
+
+            <Typography sx={{ margin: "0 8px" }}>|</Typography>
+            <Link href="/register">
+              <Typography sx={{ fontSize: "18px", cursor: "pointer" }}>
+                Đăng ký
+              </Typography>
+            </Link>
             <IconButton
               size="large"
               edge="end"
@@ -209,7 +293,7 @@ export default function HeaderDesktop (props: IHeaderDesktopProps) {
               {/* <AccountCircle /> */}
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"
