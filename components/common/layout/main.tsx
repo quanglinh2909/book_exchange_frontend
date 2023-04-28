@@ -1,6 +1,8 @@
 import { LayoutProps } from "@/models/common";
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import { useState } from "react";
+import Header from "../header";
+import Footer from "../footer";
 export interface MainLayoutProps {}
 
 export function MainLayout({ children }: LayoutProps) {
@@ -14,7 +16,9 @@ export function MainLayout({ children }: LayoutProps) {
       direction={"row"}
       overflow={"hidden"}
     >
-      <Stack component="main" flexGrow={1} mt={{ xs: 2, md: 0 }}>
+      <Box>
+        <Header />
+
         <Container
           className={expand ? "expand" : ""}
           sx={{ paddingRight: "0 !important" }}
@@ -22,7 +26,8 @@ export function MainLayout({ children }: LayoutProps) {
         >
           {children}
         </Container>
-      </Stack>
+        <Footer />
+      </Box>
     </Stack>
     // </Auth>
   );

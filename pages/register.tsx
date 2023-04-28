@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { MainLayout } from "@/components";
 
 export interface IRegisterProps {}
 
@@ -104,3 +105,4 @@ export default function Register(props: IRegisterProps) {
     </Stack>
   );
 }
+Register.Layout = MainLayout;
