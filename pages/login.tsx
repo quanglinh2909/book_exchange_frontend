@@ -46,21 +46,34 @@ export default function Login(props: ILoginProps) {
     }
   };
   return (
-    <Stack sx={{ alignItems: "center", marginTop: "100px",background:"linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",width:'60%',
-                marginLeft:'290px', borderRadius:'15px',boxShadow:'0 0 10px rgba(0,0,0,0.5)' }}>
+    <Stack
+      sx={{
+        alignItems: "center",
+        marginTop: "100px",
+        background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",
+        width: "60%",
+        marginLeft: "290px",
+        borderRadius: "15px",
+        boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+      }}
+    >
       <Stack
         sx={{
           width: "500px",
           height: "auto",
           alignItems: "center",
-          margin:"100px",
+          margin: "100px",
           padding: "20px",
           border: "1px solid grey",
           borderRadius: "5px",
-          backgroundColor:'white',
+          backgroundColor: "white",
         }}
       >
-        <Typography variant="h3" padding={"5px 0 10px 0"} sx={{fontWeight:'600'}}>
+        <Typography
+          variant="h3"
+          padding={"5px 0 10px 0"}
+          sx={{ fontWeight: "600", color: "#000" }}
+        >
           Login Form
         </Typography>
         <TextField
@@ -70,7 +83,7 @@ export default function Login(props: ILoginProps) {
           sx={{ width: "100%", margin: 3 }}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
-          //
+          //ddd
         />
         <TextField
           id="outlined-password-input"
@@ -81,8 +94,16 @@ export default function Login(props: ILoginProps) {
           onChange={(e) => setpass(e.target.value)}
           value={pass}
         />
-        <Button variant="contained" sx={{ width: "100%", marginBottom: 1,borderRadius:'50px',
-        backgroundColor:"blue !important"}} onClick={handleLogin}>
+        <Button
+          variant="contained"
+          sx={{
+            width: "100%",
+            marginBottom: 1,
+            borderRadius: "50px",
+            backgroundColor: "blue !important",
+          }}
+          onClick={handleLogin}
+        >
           Đăng Nhập
         </Button>
       </Stack>
