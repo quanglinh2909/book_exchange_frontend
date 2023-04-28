@@ -11,7 +11,6 @@ import {
 import type { MenuProps } from 'antd';
 import { Button, Menu } from 'antd';
 import { Stack } from "@mui/material";
-import BodyHome from './bodyhome';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -63,22 +62,18 @@ export default function BodyHomeMain (props: IBodyHomeMainProps) {
       setCollapsed(!collapsed);
     };
   return (
-    <Stack sx={{display:'flex'}} className='menu-stack'>
-            <Stack className='menu-bar'  sx={{ width: 256, margin:'0 0 0 0' }}>
-            {/* <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
-            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </Button> */}
-            <Menu
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            mode="inline"
-            theme="dark"
-            //   inlineCollapsed={collapsed}
-            items={items}
-            />
-        </Stack>
-  {/* <BodyHome/> */}
-
-    </Stack>
+    <div style={{ width: 256, margin:'0 0 0 0' }}>
+    {/* <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
+      {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+    </Button> */}
+    <Menu
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1']}
+      mode="inline"
+      theme="dark"
+    //   inlineCollapsed={collapsed}
+      items={items}
+    />
+  </div>
   );
 }

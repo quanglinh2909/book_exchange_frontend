@@ -170,10 +170,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <Link href="/">
-               <MenuBookIcon />
-
-            </Link>
+            <MenuBookIcon />
           </IconButton>
           <Typography
             variant="h6"

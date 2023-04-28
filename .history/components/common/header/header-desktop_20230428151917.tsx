@@ -170,10 +170,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <Link href="/">
-               <MenuBookIcon />
-
-            </Link>
+            <MenuBookIcon />
           </IconButton>
           <Typography
             variant="h6"
@@ -203,7 +200,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
 
             <Typography sx={{ margin: "0 8px" }}>|</Typography>
             <Link href="/register">
-              <Typography sx={{ fontSize: "18px", cursor: "pointer" }} className="hover:opacity-80">
+              <Typography sx={{ fontSize: "18px", cursor: "pointer" }}>
                 Đăng ký
               </Typography>
             </Link>

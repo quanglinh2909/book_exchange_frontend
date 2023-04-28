@@ -63,7 +63,7 @@ export default function BodyHomeMain (props: IBodyHomeMainProps) {
       setCollapsed(!collapsed);
     };
   return (
-    <Stack sx={{display:'flex'}} className='menu-stack'>
+    <Stack sx={{display:'flex'}}>
             <Stack className='menu-bar'  sx={{ width: 256, margin:'0 0 0 0' }}>
             {/* <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
