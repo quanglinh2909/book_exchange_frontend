@@ -61,8 +61,8 @@ export default function CardBook (props: ICardBookProps) {
       alt="Paella dish"
     />
     <CardContent>
-    <Typography variant="body2" sx={{color:'#1976d2', fontWeight:'600'}}>
-        Conan Doyle
+    <Typography variant="body2" color="text.secondary">
+        Nguyễn Văn Tùng
       </Typography>
       <Typography variant="body2" color="text.secondary">
         This impressive paella is a perfect party dish and a fun meal to cook

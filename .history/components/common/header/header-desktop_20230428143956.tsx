@@ -16,12 +16,6 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Link from "next/link";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import MenuHeader from "./munuheader";
 
 export interface IHeaderDesktopProps {}
@@ -63,9 +57,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
-    onclick: () => {
-      alert(123);
-    },
   },
 }));
 
@@ -73,7 +64,6 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const [isSearch, setIsSearch] = React.useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -180,9 +170,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <Link href="/">
-              <MenuBookIcon />
-            </Link>
+            <MenuBookIcon />
           </IconButton>
           <Typography
             variant="h6"
@@ -192,7 +180,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
           >
             Book Exchange
           </Typography>
-          <Search onClick={() => setIsSearch(!setIsSearch)}>
+          <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -200,101 +188,19 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-            {isSearch && (
-              <List
-                sx={{
-                  width: "100%",
-                  maxWidth: 360,
-                  bgcolor: "background.paper",
-                  display: "none",
-                }}
-              >
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 1" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Brunch this weekend?"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 1
-                        </Typography>
-                        {" — Mô tả sách 3"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 2" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Summer BBQ"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 2
-                        </Typography>
-                        {" — Mô tả sách 2"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 3" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Oui Oui"
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 3
-                        </Typography>
-                        {" — Mô tả sách 3"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-              </List>
-            )}
           </Search>
-          <MenuHeader />
+          <MenuHeader/>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link href="/login">
-              <Typography
-                sx={{ fontSize: "18px", cursor: "pointer" }}
-                className="hover:opacity-80"
-              >
+              <Typography sx={{ fontSize: "18px", cursor: "pointer" }}>
                 Đăng nhập
               </Typography>
             </Link>
 
             <Typography sx={{ margin: "0 8px" }}>|</Typography>
             <Link href="/register">
-              <Typography
-                sx={{ fontSize: "18px", cursor: "pointer" }}
-                className="hover:opacity-80"
-              >
+              <Typography sx={{ fontSize: "18px", cursor: "pointer" }}>
                 Đăng ký
               </Typography>
             </Link>
