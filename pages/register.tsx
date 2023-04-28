@@ -51,21 +51,34 @@ export default function Register(props: IRegisterProps) {
     }
   };
   return (
-    <Stack sx={{ alignItems: "center", marginTop: "100px" ,background:"linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",width:'60%',
-    marginLeft:'290px', borderRadius:'15px',boxShadow:'0 0 10px rgba(0,0,0,0.5)' }}>
+    <Stack
+      sx={{
+        alignItems: "center",
+        marginTop: "100px",
+        background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",
+        width: "60%",
+        marginLeft: "290px",
+        borderRadius: "15px",
+        boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+      }}
+    >
       <Stack
         sx={{
           width: "500px",
           height: "auto",
           alignItems: "center",
           backgroundColor: "white",
-          margin:'100px',
+          margin: "100px",
           padding: "20px",
           border: "1px solid grey",
           borderRadius: "5px",
         }}
       >
-        <Typography variant="h4" gutterBottom sx={{fontWeight:'600'}}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ fontWeight: "600", color: "#000" }}
+        >
           Register
         </Typography>
         <TextField
@@ -100,8 +113,16 @@ export default function Register(props: IRegisterProps) {
           onChange={(e) => setPass(e.target.value)}
           autoComplete="current-password"
         />
-        <Button variant="contained" onClick={handleRegister} sx={{ width: "100%", marginBottom: 1,borderRadius:'50px',
-        backgroundColor:"blue !important"}}>
+        <Button
+          variant="contained"
+          onClick={handleRegister}
+          sx={{
+            width: "100%",
+            marginBottom: 1,
+            borderRadius: "50px",
+            backgroundColor: "blue !important",
+          }}
+        >
           Đăng ký
         </Button>
       </Stack>
