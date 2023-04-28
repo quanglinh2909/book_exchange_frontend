@@ -51,42 +51,44 @@ export default function Register(props: IRegisterProps) {
     }
   };
   return (
-    <Stack sx={{ alignItems: "center", marginTop: "100px" }}>
+    <Stack sx={{ alignItems: "center", marginTop: "100px" ,background:"linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",width:'60%',
+    marginLeft:'290px', borderRadius:'15px',boxShadow:'0 0 10px rgba(0,0,0,0.5)' }}>
       <Stack
         sx={{
           width: "500px",
           height: "auto",
           alignItems: "center",
-          backgroundColor: "yellowgreen",
+          backgroundColor: "white",
+          margin:'100px',
           padding: "20px",
           border: "1px solid grey",
           borderRadius: "5px",
         }}
       >
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{fontWeight:'600'}}>
           Register
         </Typography>
         <TextField
           required
           id="outlined-required"
-          label="name"
-          sx={{ width: "100%", margin: 3 }}
+          label="Name"
+          sx={{ width: "100%", margin: 2 }}
           onChange={(e) => setName(e.target.value)}
           value={name}
         />
         <TextField
           required
           id="outlined-required"
-          label="số điện thoại"
-          sx={{ width: "100%", margin: 3 }}
+          label="SĐT"
+          sx={{ width: "100%", margin: 2 }}
           onChange={(e) => setPhone(e.target.value)}
           value={phone}
         />
         <TextField
           required
           id="outlined-required"
-          label="email"
-          sx={{ width: "100%", margin: 3 }}
+          label="Email*"
+          sx={{ width: "100%", margin: 2 }}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
@@ -94,11 +96,12 @@ export default function Register(props: IRegisterProps) {
           id="outlined-password-input"
           label="Password"
           type="password"
-          sx={{ width: "100%", margin: 3 }}
+          sx={{ width: "100%", margin: 2 }}
           onChange={(e) => setPass(e.target.value)}
           autoComplete="current-password"
         />
-        <Button variant="contained" onClick={handleRegister}>
+        <Button variant="contained" onClick={handleRegister} sx={{ width: "100%", marginBottom: 1,borderRadius:'50px',
+        backgroundColor:"blue !important"}}>
           Đăng ký
         </Button>
       </Stack>
