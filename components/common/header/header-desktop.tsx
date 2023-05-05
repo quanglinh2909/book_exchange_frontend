@@ -337,7 +337,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
                   />
                 </ListItemButton>
               </List>
-            )}
+            }
           </Search>
 
           </div>
