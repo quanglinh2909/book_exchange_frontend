@@ -16,15 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Link from "next/link";
-
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import { ListItemButton } from "@mui/material";
-
+import MenuHeader from "./munuheader";
 
 export interface IHeaderDesktopProps {}
 
@@ -65,9 +57,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
-    onclick: () => {
-      alert(123);
-    },
   },
 }));
 
@@ -75,10 +64,6 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-
-    const [isSearch, setIsSearch]= React.useState(false);
-    const containerRef = React.useRef<HTMLDivElement>(null);
-
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -121,18 +106,6 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
-  const handleClickOutside = (event: MouseEvent) => {
-    if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-      setIsSearch(false);
-    }
-  };
-
-  React.useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -185,7 +158,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
       </MenuItem>
     </Menu>
   );
-  
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -198,7 +171,8 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
             sx={{ mr: 2 }}
           >
             <Link href="/">
-              <MenuBookIcon />
+               <MenuBookIcon />
+
             </Link>
           </IconButton>
           <Typography
@@ -209,10 +183,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
           >
             Book Exchange
           </Typography>
-
-          <div ref={containerRef}>
-          <Search onClick={()=>setIsSearch(!isSearch)}>
-
+          <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -220,145 +191,19 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-
-            {isSearch && 
-          
-                      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', position: 'absolute',zIndex: 999 }}>
-                <ListItemButton sx={{ alignItems: "flex-start" }} >
-
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 1" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary=""
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 1
-                        </Typography>
-
-                        {' — Mô tả sách 1'}
-
-                      </React.Fragment>
-                    }
-                  />
-                </ListItemButton>
-                <Divider variant="inset" component="li" />
-                <ListItemButton alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 2" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary=""
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 2
-                        </Typography>
-                        {" — Mô tả sách 2"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItemButton>
-                <Divider variant="inset" component="li" />
-                <ListItemButton alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 3" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary=""
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 3
-                        </Typography>
-                        {" — Mô tả sách 3"}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItemButton>
-                <Divider variant="inset" component="li" />
-                <ListItemButton alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 4" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary=""
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: 'inline' }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 4
-                        </Typography>
-                        {' — Mô tả sách 4'}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItemButton>
-                <Divider variant="inset" component="li" />
-                <ListItemButton alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Sách 5" src="" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary=""
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: 'inline' }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Sách 5
-                        </Typography>
-                        {' — Mô tả sách 5'}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItemButton>
-              </List>
-            )}
           </Search>
-
-          </div>
-
+          <MenuHeader/>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link href="/login">
-              <Typography
-                sx={{ fontSize: "18px", cursor: "pointer" }}
-                className="hover:opacity-80"
-              >
+              <Typography sx={{ fontSize: "18px", cursor: "pointer" }} className="hover:opacity-80">
                 Đăng nhập
               </Typography>
             </Link>
 
             <Typography sx={{ margin: "0 8px" }}>|</Typography>
             <Link href="/register">
-              <Typography
-                sx={{ fontSize: "18px", cursor: "pointer" }}
-                className="hover:opacity-80"
-              >
+              <Typography sx={{ fontSize: "18px", cursor: "pointer" }} className="hover:opacity-80">
                 Đăng ký
               </Typography>
             </Link>

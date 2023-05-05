@@ -61,7 +61,7 @@ export default function CardBook (props: ICardBookProps) {
       alt="Paella dish"
     />
     <CardContent>
-    <Typography variant="body2" sx={{color:'#1976d2', fontWeight:'600'}}>
+    <Typography variant="body1" color="#000">
         Conan Doyle
       </Typography>
       <Typography variant="body2" color="text.secondary">
