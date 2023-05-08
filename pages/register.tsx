@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { MainLayout } from "@/components";
+import Link from "next/link";
 
 export interface IRegisterProps {}
 
@@ -129,9 +130,9 @@ export default function Register(props: IRegisterProps) {
           sx={{ fontWeight: "600", color: "#000", mt: 2 }}
         >
           If you have an account?{" "}
-          <a style={{ color: "blue" }} href="/login">
+          <Link style={{ color: "blue" }} href="/login">
             Login
-          </a>
+          </Link>
         </Typography>
       </Stack>
     </Stack>

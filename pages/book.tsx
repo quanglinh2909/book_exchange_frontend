@@ -1,16 +1,12 @@
-import { AdminLayout } from "@/components";
 import BlogPostCard from "@/components/book/BlogPostCard";
 import UploadBookDialog from "@/components/book/upload-book-dialog";
+import Main2Layout from "@/components/common/layout/main2";
 import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
 import { Button, Grid, Stack } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import Paper from "@mui/material/Paper";
 import { useState } from "react";
-export interface IBookAdminPageProps {}
+export interface IBookPageProps {}
 
-export default function BookAdminPage(props: IBookAdminPageProps) {
+export default function BookPage(props: IBookPageProps) {
   const [open, setOpen] = useState(false);
   const post = {
     cover: "/assets/images/covers/cover_1.jpg",
@@ -26,20 +22,7 @@ export default function BookAdminPage(props: IBookAdminPageProps) {
   return (
     <Stack sx={{ bgcolor: "#fff" }} p={"20px 20px"}>
       <Stack justifyContent={"space-between"} direction={"row"}>
-        <Paper
-          component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            width: 400,
-          }}
-        >
-          <IconButton sx={{ p: "10px" }} aria-label="menu">
-            <SearchIcon />
-          </IconButton>
-          <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Nhập tên sách..." />
-        </Paper>
+        <Stack></Stack>
         <Button
           variant="contained"
           sx={{
@@ -87,4 +70,4 @@ export default function BookAdminPage(props: IBookAdminPageProps) {
   );
 }
 
-BookAdminPage.Layout = AdminLayout;
+BookPage.Layout = Main2Layout;

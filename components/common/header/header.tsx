@@ -32,6 +32,7 @@ export default function Header(props: IHeaderProps) {
             display: "flex",
             alignItems: "center",
             width: 400,
+            borderRadius: "20px",
           }}
         >
           <IconButton sx={{ p: "10px" }} aria-label="menu">

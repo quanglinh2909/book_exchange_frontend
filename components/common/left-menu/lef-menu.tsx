@@ -3,6 +3,7 @@ import * as React from "react";
 import Logo from "../logo";
 import LeftMenuAdminItem from "./left-menu-admin-item";
 import navConfig from "@/mock/config";
+import configLeftMenu from "@/mock/config-left-menu";
 export interface ILeftMenuProps {}
 
 export default function LeftMenu(props: ILeftMenuProps) {
@@ -51,7 +52,7 @@ export default function LeftMenu(props: ILeftMenuProps) {
           </Typography>
         </Stack>
         <Stack spacing={1}>
-          {navConfig.map((item) => (
+          {configLeftMenu.map((item) => (
             <LeftMenuAdminItem key={item.title} item={item} />
           ))}
         </Stack>
