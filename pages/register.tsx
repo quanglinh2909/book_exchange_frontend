@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { MainLayout } from "@/components";
+import Link from "next/link";
 
 export interface IRegisterProps {}
 
@@ -54,10 +55,9 @@ export default function Register(props: IRegisterProps) {
     <Stack
       sx={{
         alignItems: "center",
-        marginTop: "100px",
         background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",
-        width: "60%",
-        marginLeft: "290px",
+        width: "100%",
+        height: "100vh",
         borderRadius: "15px",
         boxShadow: "0 0 10px rgba(0,0,0,0.5)",
       }}
@@ -65,7 +65,7 @@ export default function Register(props: IRegisterProps) {
       <Stack
         sx={{
           width: "500px",
-          height: "auto",
+          height: "600px",
           alignItems: "center",
           backgroundColor: "white",
           margin: "100px",
@@ -123,10 +123,18 @@ export default function Register(props: IRegisterProps) {
             backgroundColor: "blue !important",
           }}
         >
-          Đăng ký
+          Register
         </Button>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: "600", color: "#000", mt: 2 }}
+        >
+          If you have an account?{" "}
+          <Link style={{ color: "blue" }} href="/login">
+            Login
+          </Link>
+        </Typography>
       </Stack>
     </Stack>
   );
 }
-Register.Layout = MainLayout;

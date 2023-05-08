@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { MainLayout } from "@/components";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export interface ILoginProps {}
 
@@ -49,10 +50,9 @@ export default function Login(props: ILoginProps) {
     <Stack
       sx={{
         alignItems: "center",
-        marginTop: "100px",
         background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",
-        width: "60%",
-        marginLeft: "290px",
+        width: "100%",
+        height: "100vh",
         borderRadius: "15px",
         boxShadow: "0 0 10px rgba(0,0,0,0.5)",
       }}
@@ -60,7 +60,7 @@ export default function Login(props: ILoginProps) {
       <Stack
         sx={{
           width: "500px",
-          height: "auto",
+          height: "500px",
           alignItems: "center",
           margin: "100px",
           padding: "20px",
@@ -74,7 +74,7 @@ export default function Login(props: ILoginProps) {
           padding={"5px 0 10px 0"}
           sx={{ fontWeight: "600", color: "#000" }}
         >
-          Login Form
+          Login
         </Typography>
         <TextField
           required
@@ -104,11 +104,18 @@ export default function Login(props: ILoginProps) {
           }}
           onClick={handleLogin}
         >
-          Đăng Nhập
+          Login
         </Button>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: "600", color: "#000", mt: 2 }}
+        >
+          {"Don't have an account?"}
+          <Link style={{ color: "blue" }} href="/register">
+            Sign up
+          </Link>
+        </Typography>
       </Stack>
     </Stack>
   );
 }
-
-Login.Layout = MainLayout;
