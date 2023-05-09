@@ -1,3 +1,4 @@
+import { generalApi } from "@/api-client";
 import { AdminLayout } from "@/components";
 import AddCategoryDialog from "@/components/category/add-category-dialog";
 import CategoryItem from "@/components/category/category";
@@ -13,11 +14,32 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 export interface ICategoryPageProps {}
 
 export default function CategoryPage(props: ICategoryPageProps) {
   const [open, setOpen] = useState(false);
+  const [categorys, setCategorys] = useState([]);
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        const { data } = await generalApi.getAllCategory();
+        if (data && data.errors == null) {
+          setCategorys(data);
+        }
+      } catch (error: any) {
+        const { errors } = error.response.data;
+        let message = "";
+        for (const key in errors) {
+          message += errors[key];
+          break;
+        }
+        enqueueSnackbar(message, { variant: "error" });
+      }
+    };
+    fetchApi();
+  }, []);
   return (
     <Stack p={5} bgcolor={"#fff"} minHeight={"90vh"}>
       <Stack justifyContent={"end"} direction={"row"}>
@@ -61,19 +83,14 @@ export default function CategoryPage(props: ICategoryPageProps) {
               </TableRow>
             </TableHead>
             <TableBody>
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
+              {categorys.map((item: any, index) => (
+                <CategoryItem
+                  key={index}
+                  index={index}
+                  name={item.name}
+                  description={item.description}
+                />
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

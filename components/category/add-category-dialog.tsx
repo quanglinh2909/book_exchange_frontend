@@ -10,6 +10,9 @@ import RichText from "../common/ricktext";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { CategoryPayload } from "@/models/general";
+import { generalApi } from "@/api-client";
 export interface IAddCategoryDialogProps {
   open: boolean;
   setOpen: any;
@@ -18,11 +21,41 @@ export interface IAddCategoryDialogProps {
 export default function AddCategoryDialog(props: IAddCategoryDialogProps) {
   const { open, setOpen } = props;
   const [description, setDescription] = useState("");
-
+  const [name, setName] = useState("");
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleCreate = async () => {
+    if (name === "") {
+      enqueueSnackbar("Tên thể loại không được để trống", {
+        variant: "error",
+      });
+      return;
+    }
+    const payload: CategoryPayload = {
+      name: name,
+      description: description,
+    };
+    try {
+      const { data } = await generalApi.createCategory(payload);
+      if (data && data.errors == null) {
+        enqueueSnackbar("Thêm thành công", { variant: "success" });
+        handleClose();
+        setName("");
+        setDescription("");
+      } else if (data?.errors?.errorMessage) {
+        enqueueSnackbar(data?.errors?.errorMessage, { variant: "error" });
+      }
+    } catch (error: any) {
+      const { errors } = error.response.data;
+      let message = "";
+      for (const key in errors) {
+        message += errors[key];
+        break;
+      }
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
   return (
     <Dialog open={open} fullWidth={true} maxWidth="md">
       <DialogTitle sx={{ bgcolor: "#eee" }}>
@@ -50,7 +83,12 @@ export default function AddCategoryDialog(props: IAddCategoryDialogProps) {
               {" "}
               Tên thể loại
             </Typography>
-            <TextField variant="outlined" placeholder="Nhập tên thể loại...." />
+            <TextField
+              value={name}
+              onChange={(e: any) => setName(e.target.value)}
+              variant="outlined"
+              placeholder="Nhập tên thể loại...."
+            />
           </Stack>
           <Stack mt={2}>
             <Typography
@@ -68,7 +106,7 @@ export default function AddCategoryDialog(props: IAddCategoryDialogProps) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Hủy</Button>
-        <Button onClick={handleClose} autoFocus variant="outlined">
+        <Button onClick={handleCreate} autoFocus variant="outlined">
           Lưu
         </Button>
       </DialogActions>
