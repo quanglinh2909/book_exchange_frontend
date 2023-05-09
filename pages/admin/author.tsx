@@ -1,3 +1,4 @@
+import { generalApi } from "@/api-client";
 import { AdminLayout } from "@/components";
 import AddAuthorDialog from "@/components/author/add-author-dialog";
 import CategoryItem from "@/components/category/category";
@@ -13,12 +14,32 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 export interface IAuthorPageProps {}
 
 export default function AuthorPage(props: IAuthorPageProps) {
   const [open, setOpen] = useState(false);
-
+  const [authors, setAuthors] = useState([]);
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        const { data } = await generalApi.getAllAuthor();
+        if (data && data.errors == null) {
+          setAuthors(data);
+        }
+      } catch (error: any) {
+        const { errors } = error.response.data;
+        let message = "";
+        for (const key in errors) {
+          message += errors[key];
+          break;
+        }
+        enqueueSnackbar(message, { variant: "error" });
+      }
+    };
+    fetchApi();
+  }, []);
   return (
     <Stack p={5} bgcolor={"#fff"} minHeight={"90vh"}>
       <Stack justifyContent={"end"} direction={"row"}>
@@ -62,19 +83,14 @@ export default function AuthorPage(props: IAuthorPageProps) {
               </TableRow>
             </TableHead>
             <TableBody>
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
-              <CategoryItem />
+              {authors.map((item: any, index) => (
+                <CategoryItem
+                  key={index}
+                  index={index}
+                  name={item.name}
+                  description={item.description}
+                />
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

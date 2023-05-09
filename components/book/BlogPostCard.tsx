@@ -59,14 +59,14 @@ const StyledCover = styled("img")({
 // ----------------------------------------------------------------------
 
 export default function BlogPostCard({ post, index }: any) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
+  const { productImages, bookName, author, createdAt } = post;
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
-
+  const base64Flag = "data:image/jpeg;base64,";
   const POST_INFO = [
-    { number: comment, icon: "eva:message-circle-fill" },
-    { number: view, icon: "eva:eye-fill" },
-    { number: share, icon: "eva:share-fill" },
+    { number: 20, icon: "eva:message-circle-fill" },
+    { number: 30, icon: "eva:eye-fill" },
+    { number: 43, icon: "eva:share-fill" },
   ];
 
   return (
@@ -125,7 +125,10 @@ export default function BlogPostCard({ post, index }: any) {
             }}
           />
 
-          <StyledCover alt={title} src={cover} />
+          <StyledCover
+            alt={bookName}
+            src={base64Flag + productImages[0].picByte}
+          />
         </StyledCardMedia>
 
         <CardContent
@@ -157,7 +160,7 @@ export default function BlogPostCard({ post, index }: any) {
               }),
             }}
           >
-            {title}
+            {bookName}
           </StyledTitle>
 
           <StyledInfo>

@@ -1,14 +1,18 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { TableCell, TableRow, Typography } from "@mui/material";
-export interface ICategoryItemProps {}
+export interface ICategoryItemProps {
+  index: number;
+  name: string;
+  description: string;
+}
 
 export default function CategoryItem(props: ICategoryItemProps) {
   return (
     <TableRow hover tabIndex={-1} role="checkbox">
-      <TableCell align="center">1</TableCell>
+      <TableCell align="center">{props.index}</TableCell>
 
       <TableCell component="th" scope="row" padding="none" sx={{ pl: 1 }}>
-        Hoàng Quang Linh
+        {props.name}
       </TableCell>
 
       <TableCell align="left">
@@ -19,7 +23,7 @@ export default function CategoryItem(props: ICategoryItemProps) {
             color: "#43434390",
           }}
           dangerouslySetInnerHTML={{
-            __html: "09887767666",
+            __html: props.description,
           }}
         ></Typography>
       </TableCell>
