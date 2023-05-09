@@ -5,10 +5,10 @@ import { enqueueSnackbar } from "notistack";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/joy/Checkbox";
 import { useState } from "react";
 import { MainLayout } from "@/components";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export interface ILoginProps {}
 
@@ -47,20 +47,34 @@ export default function Login(props: ILoginProps) {
     }
   };
   return (
-    <Stack sx={{ alignItems: "center", marginTop: "100px" }}>
+    <Stack
+      sx={{
+        alignItems: "center",
+        background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",
+        width: "100%",
+        height: "100vh",
+        borderRadius: "15px",
+        boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+      }}
+    >
       <Stack
         sx={{
           width: "500px",
-          height: "auto",
+          height: "500px",
           alignItems: "center",
-          backgroundColor: "yellowgreen",
+          margin: "100px",
           padding: "20px",
           border: "1px solid grey",
           borderRadius: "5px",
+          backgroundColor: "white",
         }}
       >
-        <Typography variant="h3" padding={"5px 0 10px 0"}>
-          Sign IN
+        <Typography
+          variant="h3"
+          padding={"5px 0 10px 0"}
+          sx={{ fontWeight: "600", color: "#000" }}
+        >
+          Login
         </Typography>
         <TextField
           required
@@ -69,6 +83,7 @@ export default function Login(props: ILoginProps) {
           sx={{ width: "100%", margin: 3 }}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          //ddd
         />
         <TextField
           id="outlined-password-input"
@@ -79,12 +94,28 @@ export default function Login(props: ILoginProps) {
           onChange={(e) => setpass(e.target.value)}
           value={pass}
         />
-        <Button variant="contained" onClick={handleLogin}>
-          Đăng Nhập
+        <Button
+          variant="contained"
+          sx={{
+            width: "100%",
+            marginBottom: 1,
+            borderRadius: "50px",
+            backgroundColor: "blue !important",
+          }}
+          onClick={handleLogin}
+        >
+          Login
         </Button>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: "600", color: "#000", mt: 2 }}
+        >
+          {"Don't have an account?"}
+          <Link style={{ color: "blue" }} href="/register">
+            Sign up
+          </Link>
+        </Typography>
       </Stack>
     </Stack>
   );
 }
-
-Login.Layout = MainLayout;
