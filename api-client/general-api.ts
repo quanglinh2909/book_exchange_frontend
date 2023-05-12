@@ -36,4 +36,7 @@ export const generalApi = {
   deleteAuthor(id: string) {
     return axiosClient.delete("/author/delete/" + id);
   },
+  getBookById(id:string){
+    return axiosClient.get("/books/"+id)
+  },
 };
