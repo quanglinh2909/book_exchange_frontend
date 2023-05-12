@@ -1,16 +1,21 @@
+import { PATH_API } from "@/constants";
 import { Grid, Stack, Typography, Card } from "@mui/material";
 import * as React from "react";
 
-export interface IItemBookProps {}
+export interface IItemBookProps {
+  data?: any;
+}
 
 export default function ItemBook(props: IItemBookProps) {
+  const { data } = props;
+  const base64Flag = "data:image/jpeg;base64,";
   return (
     <Grid item xs={6} sm={3} md={2} lg={2} xl={2} sx={{ cursor: "pointer" }}>
       <Card>
         <Stack>
           <Stack sx={{ height: "200px" }}>
             <img
-              src="\assets\images\products\nxbtre_full_04152018_031555.jpg"
+              src={base64Flag + data?.productImages[0]?.picByte}
               style={{
                 width: "100%",
                 height: "100%",
@@ -31,7 +36,7 @@ export default function ItemBook(props: IItemBookProps) {
                 },
               }}
             >
-              Tôi thấy hoa vàng trên cỏ xanh
+              {data?.bookName}
             </Typography>
             <Typography
               variant={"body1"}
@@ -41,7 +46,7 @@ export default function ItemBook(props: IItemBookProps) {
                 fontSize: "14px",
               }}
             >
-              Nguyễn Nhật Ánh
+              {data?.author?.name}
             </Typography>
             <Typography
               variant={"body1"}
@@ -53,7 +58,7 @@ export default function ItemBook(props: IItemBookProps) {
                 fontStyle: "italic",
               }}
             >
-              29 phút trước
+             {data?.createdAt}
             </Typography>
           </Stack>
         </Stack>
