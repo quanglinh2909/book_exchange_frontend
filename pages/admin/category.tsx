@@ -85,6 +85,9 @@ export default function CategoryPage(props: ICategoryPageProps) {
             <TableBody>
               {categorys.map((item: any, index) => (
                 <CategoryItem
+                  categorys={categorys}
+                  setCategorys={setCategorys}
+                  id={item.id}
                   key={index}
                   index={index}
                   name={item.name}
@@ -95,7 +98,12 @@ export default function CategoryPage(props: ICategoryPageProps) {
           </Table>
         </TableContainer>
       </Card>
-      <AddCategoryDialog open={open} setOpen={setOpen} />
+      <AddCategoryDialog
+        categorys={categorys}
+        setCategorys={setCategorys}
+        open={open}
+        setOpen={setOpen}
+      />
     </Stack>
   );
 }

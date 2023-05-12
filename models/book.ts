@@ -8,6 +8,7 @@ export interface BookUploadPayload {
 export interface BookPayload {
   name: string;
   description: string;
-  idAuthor: string;
-  idCategory: string;
+  authorName: string;
+  idUserCreate: number;
+  idCategory: number;
 }
