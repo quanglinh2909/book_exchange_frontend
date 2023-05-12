@@ -342,8 +342,9 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
             }
           </Search>
 
-          </div>
 
+          </div>
+            <MenuHeader/>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link href="/login">

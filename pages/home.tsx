@@ -1,11 +1,32 @@
+import { HomeApi } from "@/api-client/home";
 import Main2Layout from "@/components/common/layout/main2";
 import NewBookHome from "@/components/home/new-book";
 import SwiperSlideHomes from "@/components/home/swiper-slide-home";
+import { setLoading } from "@/store";
 import { Stack } from "@mui/material";
+import React, { useEffect } from 'react'
+import { useDispatch } from "react-redux";
 
 export interface IHomePageProps {}
 
 export default function HomePage(props: IHomePageProps) {
+  const [dataListBook, setDataListBook ] = React.useState();
+  const [dataListBookCategory, setDataListBookCategory ] = React.useState<any[]>();
+  const dispatch = useDispatch();
+  const dataBook = async () => {
+    dispatch(setLoading(true));
+      const{data} = await HomeApi.getListNewBooks();
+      const{data:dataCategory} = await HomeApi.getListBookCategory();
+      console.log(data);
+      setDataListBook(data)
+      setDataListBookCategory(dataCategory)
+      dispatch(setLoading(false));
+  }
+  useEffect(()=> {
+    dataBook();
+
+  },[])
+
   return (
     <Stack
       bgcolor={"#fff"}
@@ -26,10 +47,10 @@ export default function HomePage(props: IHomePageProps) {
       }}
     >
       <SwiperSlideHomes />
-      <NewBookHome title="Mới đăng tải" />
-      <NewBookHome title="Ngôn tình" />
-      <NewBookHome title="Tài liệu" />
-      <NewBookHome title="Tiểu thuyết" />
+      <NewBookHome data={dataListBook} title="Mới đăng tải" />
+      {dataListBookCategory?.map((item:any, index: number)=> (
+        <NewBookHome data={item.listBook} title={item?.name} key={index}/>
+      ))}
     </Stack>
   );
 }
