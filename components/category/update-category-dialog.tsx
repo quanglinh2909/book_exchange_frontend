@@ -1,3 +1,4 @@
+import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,39 +8,48 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { IconButton, Stack, TextField, Typography } from "@mui/material";
 import RichText from "../common/ricktext";
 import CloseIcon from "@mui/icons-material/Close";
-import { enqueueSnackbar } from "notistack";
+
 import { useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { CategoryPayload } from "@/models/general";
 import { generalApi } from "@/api-client";
-import { AuthorPayload } from "@/models/general";
-export interface IAddAuthorDialogProps {
+export interface IUpdateCategoryDialogProps {
   open: boolean;
   setOpen: any;
-  authors: Array<any>;
-  setAuthors: Function;
+  name: string;
+  description: string;
+  id: string;
+  categorys: Array<any>;
+  setCategorys: Function;
 }
 
-export default function AddAuthorDialog(props: IAddAuthorDialogProps) {
+export default function UpdateCategoryDialog(
+  props: IUpdateCategoryDialogProps
+) {
   const { open, setOpen } = props;
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
+  const [description, setDescription] = useState(props.description);
+  const [name, setName] = useState(props.name);
   const handleClose = () => {
     setOpen(false);
   };
-  const handleCreate = async () => {
+  const handleUpdate = async () => {
     if (name === "") {
-      enqueueSnackbar("Tên tác giả không được để trống", { variant: "error" });
+      enqueueSnackbar("Tên thể loại không được để trống", {
+        variant: "error",
+      });
       return;
     }
-    const payload: AuthorPayload = {
+    const payload: CategoryPayload = {
+      id: Number(props.id),
       name: name,
       description: description,
     };
     try {
-      const { data } = await generalApi.createAuthor(payload);
+      const { data } = await generalApi.updateCategory(payload);
       if (data && data.errors == null) {
-        enqueueSnackbar("Thêm thành công", { variant: "success" });
-        props.setAuthors([...props.authors, data]);
-        setOpen(false);
+        enqueueSnackbar("Sửa thành công", { variant: "success" });
+        props.setCategorys([...props.categorys, data]);
+        handleClose();
       } else if (data?.errors?.errorMessage) {
         enqueueSnackbar(data?.errors?.errorMessage, { variant: "error" });
       }
@@ -56,7 +66,7 @@ export default function AddAuthorDialog(props: IAddAuthorDialogProps) {
   return (
     <Dialog open={open} fullWidth={true} maxWidth="md">
       <DialogTitle sx={{ bgcolor: "#eee" }}>
-        {"Thêm tác giả"}{" "}
+        {"Thêm thể Loại"}{" "}
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -78,13 +88,13 @@ export default function AddAuthorDialog(props: IAddAuthorDialogProps) {
               sx={{ fontSize: "14px", color: "#000" }}
             >
               {" "}
-              Tên tác giả
+              Tên thể loại
             </Typography>
             <TextField
               value={name}
               onChange={(e: any) => setName(e.target.value)}
               variant="outlined"
-              placeholder="Nhập tên tác giả...."
+              placeholder="Nhập tên thể loại...."
             />
           </Stack>
           <Stack mt={2}>
@@ -103,7 +113,7 @@ export default function AddAuthorDialog(props: IAddAuthorDialogProps) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Hủy</Button>
-        <Button onClick={handleCreate} autoFocus variant="outlined">
+        <Button onClick={handleUpdate} autoFocus variant="outlined">
           Lưu
         </Button>
       </DialogActions>

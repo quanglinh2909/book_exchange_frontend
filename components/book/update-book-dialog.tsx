@@ -21,14 +21,14 @@ import { useRef, useState, useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
 import { generalApi } from "@/api-client";
 import { BookPayload } from "@/models/book";
-export interface IUploadBookDialogProps {
+export interface IUpdateBookDialogProps {
   open: boolean;
   setOpen: any;
   setBooks: Function;
   books: Array<any>;
 }
 
-export default function UploadBookDialog(props: IUploadBookDialogProps) {
+export default function UpdateBookDialog(props: IUpdateBookDialogProps) {
   const { open, setOpen } = props;
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");

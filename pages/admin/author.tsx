@@ -1,6 +1,7 @@
 import { generalApi } from "@/api-client";
 import { AdminLayout } from "@/components";
 import AddAuthorDialog from "@/components/author/add-author-dialog";
+import AuthorItem from "@/components/author/author";
 import CategoryItem from "@/components/category/category";
 import AddIcon from "@mui/icons-material/Add";
 import {
@@ -84,7 +85,10 @@ export default function AuthorPage(props: IAuthorPageProps) {
             </TableHead>
             <TableBody>
               {authors.map((item: any, index) => (
-                <CategoryItem
+                <AuthorItem
+                  authors={authors}
+                  setAuthors={setAuthors}
+                  id={item.id}
                   key={index}
                   index={index}
                   name={item.name}
@@ -95,7 +99,12 @@ export default function AuthorPage(props: IAuthorPageProps) {
           </Table>
         </TableContainer>
       </Card>
-      <AddAuthorDialog open={open} setOpen={setOpen} />
+      <AddAuthorDialog
+        authors={authors}
+        setAuthors={setAuthors}
+        open={open}
+        setOpen={setOpen}
+      />
     </Stack>
   );
 }

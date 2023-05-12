@@ -11,34 +11,44 @@ import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import { generalApi } from "@/api-client";
 import { AuthorPayload } from "@/models/general";
-export interface IAddAuthorDialogProps {
+import { useDispatch } from "react-redux";
+import { setLoading } from "@/store";
+export interface IUpdateAuthorDialogProps {
   open: boolean;
   setOpen: any;
+  name: string;
+  description: string;
+  id: string;
   authors: Array<any>;
   setAuthors: Function;
 }
 
-export default function AddAuthorDialog(props: IAddAuthorDialogProps) {
+export default function UpdateAuthorDialog(props: IUpdateAuthorDialogProps) {
   const { open, setOpen } = props;
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
+  const [description, setDescription] = useState(props.description);
+  const [name, setName] = useState(props.name);
+  const dispatch = useDispatch();
   const handleClose = () => {
     setOpen(false);
   };
-  const handleCreate = async () => {
+  const handleUpdate = async () => {
     if (name === "") {
       enqueueSnackbar("Tên tác giả không được để trống", { variant: "error" });
       return;
     }
+    dispatch(setLoading(true));
     const payload: AuthorPayload = {
+      id: Number(props.id),
       name: name,
       description: description,
     };
     try {
-      const { data } = await generalApi.createAuthor(payload);
+      const { data } = await generalApi.updateAuthor(payload);
       if (data && data.errors == null) {
-        enqueueSnackbar("Thêm thành công", { variant: "success" });
-        props.setAuthors([...props.authors, data]);
+        enqueueSnackbar("Sửa thành công", { variant: "success" });
+        const newArray = props.authors.filter((e) => e.id !== props.id);
+
+        props.setAuthors([...newArray, data]);
         setOpen(false);
       } else if (data?.errors?.errorMessage) {
         enqueueSnackbar(data?.errors?.errorMessage, { variant: "error" });
@@ -51,6 +61,8 @@ export default function AddAuthorDialog(props: IAddAuthorDialogProps) {
         break;
       }
       enqueueSnackbar(message, { variant: "error" });
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   return (
@@ -103,8 +115,8 @@ export default function AddAuthorDialog(props: IAddAuthorDialogProps) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Hủy</Button>
-        <Button onClick={handleCreate} autoFocus variant="outlined">
-          Lưu
+        <Button onClick={handleUpdate} autoFocus variant="outlined">
+          Cập nhật
         </Button>
       </DialogActions>
     </Dialog>
