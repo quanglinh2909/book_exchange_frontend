@@ -1,4 +1,8 @@
-import { AuthorPayload, CategoryPayload } from "@/models/general";
+import {
+  AuthorPayload,
+  CategoryPayload,
+  SearchPayLoad,
+} from "@/models/general";
 import axiosClient from "./axios-client";
 import axios from "axios";
 
@@ -35,5 +39,8 @@ export const generalApi = {
   },
   deleteAuthor(id: string) {
     return axiosClient.delete("/author/delete/" + id);
+  },
+  search(payload: SearchPayLoad) {
+    return axiosClient.post("/search/", payload);
   },
 };
