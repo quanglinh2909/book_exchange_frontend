@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
+import Link from "next/link";
 export interface IHeaderProps {}
 
 export default function Header(props: IHeaderProps) {
@@ -53,7 +54,28 @@ export default function Header(props: IHeaderProps) {
         <Badge badgeContent={4} color="primary">
           <NotificationsIcon />
         </Badge>
+
         <Avatar sx={{ width: "35px", height: "35px" }} />
+        <Link href="/login">
+              <Typography
+              color={"#000"}
+              className="hover:text-blue-500 transition duration-300 flex items-center"
+                sx={{ fontSize: "18px", cursor: "pointer" }}
+              >
+                Đăng nhập
+              </Typography>
+            </Link>
+
+            <Typography sx={{ margin: "0 8px" }}>|</Typography>
+            <Link href="/register">
+              <Typography
+              color={"#000"}
+              className="hover:text-blue-500 transition duration-300 flex items-center"
+                sx={{ fontSize: "18px", cursor: "pointer" }}
+              >
+                Đăng ký
+              </Typography>
+            </Link>
       </Stack>
     </Stack>
   );

@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useRef, useState } from "react";
-import UpdateCategoryDialog from "./update-category-dialog";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -19,17 +18,18 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { enqueueSnackbar } from "notistack";
 import { generalApi } from "@/api-client";
+import UpdateAuthorDialog from "./update-author-dialog";
 
-export interface ICategoryItemProps {
+export interface IAuthorItemProps {
   index: number;
   name: string;
   description: string;
   id: string;
-  categorys: Array<any>;
-  setCategorys: Function;
+  authors: Array<any>;
+  setAuthors: Function;
 }
 
-export default function CategoryItem(props: ICategoryItemProps) {
+export default function AuthorItem(props: IAuthorItemProps) {
   const [openAction, setOpenAction] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -39,11 +39,11 @@ export default function CategoryItem(props: ICategoryItemProps) {
   };
   const handleCloseDelete = async () => {
     try {
-      const { data } = await generalApi.deleteCategory(props.id);
+      const { data } = await generalApi.deleteAuthor(props.id);
       if (data && data.errors == null) {
         enqueueSnackbar("Xóa thành công", { variant: "success" });
-        const newArray = props.categorys.filter((e) => e.id !== props.id);
-        props.setCategorys(newArray);
+        const newArray = props.authors.filter((e) => e.id !== props.id);
+        props.setAuthors(newArray);
         setOpenDelete(false);
       } else if (data?.errors?.errorMessage) {
         enqueueSnackbar(data?.errors?.errorMessage, { variant: "error" });
@@ -137,14 +137,14 @@ export default function CategoryItem(props: ICategoryItemProps) {
           </Paper>
         </Box>
       </TableCell>
-      <UpdateCategoryDialog
+      <UpdateAuthorDialog
+        authors={props.authors}
+        setAuthors={props.setAuthors}
         name={props.name}
         description={props.description}
         open={openUpdate}
         setOpen={setOpenUpdate}
         id={props.id}
-        categorys={props.categorys}
-        setCategorys={props.setCategorys}
       />
       <Dialog
         open={openDelete}
@@ -155,7 +155,7 @@ export default function CategoryItem(props: ICategoryItemProps) {
         <DialogTitle id="alert-dialog-title">{"Xác nhận xóa ?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Bạn có chắc chắn muốn xóa thể loại này không ?
+            Bạn có chắc chắn muốn xóa tác giả này không ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

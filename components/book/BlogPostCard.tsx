@@ -9,13 +9,20 @@ import {
   Avatar,
   Typography,
   CardContent,
+  Button,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  MenuItem,
+  Stack,
 } from "@mui/material";
 // utils
 //
 import { fDate, fShortenNumber } from "@/utils";
 import SvgColor from "./SvgColor";
 import Iconify from "./Iconify";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useRef, useState } from "react";
 // ----------------------------------------------------------------------
 
 const StyledCardMedia = styled("div")({
@@ -68,7 +75,20 @@ export default function BlogPostCard({ post, index }: any) {
     { number: 30, icon: "eva:eye-fill" },
     { number: 43, icon: "eva:share-fill" },
   ];
-
+  const anchorRef = useRef<HTMLButtonElement>(null);
+  const [openAction, setOpenAction] = useState(false);
+  const handleToggle = (e: any) => {
+    setOpenAction((prevOpen) => !prevOpen);
+  };
+  const handleCloseAction = (event: Event | React.SyntheticEvent) => {
+    if (
+      anchorRef.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      return;
+    }
+    setOpenAction(false);
+  };
   return (
     <Grid
       item
@@ -124,6 +144,57 @@ export default function BlogPostCard({ post, index }: any) {
               }),
             }}
           />
+          <Button
+            sx={{ position: "absolute", top: "24px", right: "24px" }}
+            ref={anchorRef}
+            onClick={(e: any) => handleToggle(e)}
+          >
+            <MoreVertIcon
+              className="show-icon-setting"
+              sx={{ color: "#fff", zIndex: "2" }}
+            />
+            <Stack sx={{ position: "relative" }}>
+              <Box
+                sx={{
+                  position: "absolute",
+                  bottom: "0",
+                  transform: "translateY(calc(100%))",
+                  right: "10px",
+                  zIndex: "10",
+                  display: openAction ? "block" : "none",
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseAction}>
+                    <MenuList
+                      id="composition-menu"
+                      aria-labelledby="composition-button"
+                      autoFocusItem={openAction}
+                    >
+                      <MenuItem
+                        sx={{ textTransform: "none" }}
+                        onClick={(e) => {
+                          handleCloseAction(e);
+                        }}
+                      >
+                        Sửa
+                      </MenuItem>
+                      <MenuItem
+                        sx={{ textTransform: "none" }}
+                        onClick={(e) => {
+                          handleCloseAction(e);
+                        }}
+                      >
+                        Xóa
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Box>
+            </Stack>
+          </Button>
 
           <StyledCover
             alt={bookName}

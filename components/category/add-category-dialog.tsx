@@ -16,6 +16,8 @@ import { generalApi } from "@/api-client";
 export interface IAddCategoryDialogProps {
   open: boolean;
   setOpen: any;
+  categorys: Array<any>;
+  setCategorys: Function;
 }
 
 export default function AddCategoryDialog(props: IAddCategoryDialogProps) {
@@ -40,6 +42,7 @@ export default function AddCategoryDialog(props: IAddCategoryDialogProps) {
       const { data } = await generalApi.createCategory(payload);
       if (data && data.errors == null) {
         enqueueSnackbar("Thêm thành công", { variant: "success" });
+        props.setCategorys([...props.categorys, data]);
         handleClose();
         setName("");
         setDescription("");
