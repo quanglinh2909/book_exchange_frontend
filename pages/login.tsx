@@ -34,7 +34,7 @@ export default function Login(props: ILoginProps) {
         password: pass,
       });
       enqueueSnackbar("Đăng nhập thành công", { variant: "success" });
-      router.push("/");
+      router.push("/home");
     } catch (error: any) {
       console.log(error);
       if (error?.response?.data?.message) {
