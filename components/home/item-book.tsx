@@ -10,10 +10,10 @@ export default function ItemBook(props: IItemBookProps) {
   const { data } = props;
   const base64Flag = "data:image/jpeg;base64,";
   return (
-    <Grid item xs={6} sm={3} md={2} lg={2} xl={2} sx={{ cursor: "pointer" }}>
+    <Grid item xs={6} sm={4} md={4} lg={4} xl={4} sx={{ cursor: "pointer" }}>
       <Card>
         <Stack>
-          <Stack sx={{ height: "200px" }}>
+          <Stack sx={{ height: "250px" }}>
             <img
               src={base64Flag + data?.productImages[0]?.picByte}
               style={{
@@ -58,7 +58,7 @@ export default function ItemBook(props: IItemBookProps) {
                 fontStyle: "italic",
               }}
             >
-             {data?.createdAt}
+              {data?.createdAt}
             </Typography>
           </Stack>
         </Stack>
