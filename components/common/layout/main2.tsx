@@ -11,7 +11,7 @@ export default function Main2Layout({ children }: LayoutProps) {
       </Stack>
       <Stack flex={1} sx={{ overflow: "hidden" }}>
         <Header />
-        <Stack>{children}</Stack>
+        <Stack sx={{ height: "100%" }}>{children}</Stack>
       </Stack>
     </Stack>
   );

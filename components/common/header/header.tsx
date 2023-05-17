@@ -103,7 +103,12 @@ export default function Header(props: IHeaderProps) {
                   >
                     <Avatar src={base64Flag + item.productImages[0].picByte} />
                     <Stack sx={{ marginLeft: "10px" }}>
-                      <Typography>{item.bookName}</Typography>
+                      <Typography>
+                        {" "}
+                        {item.bookName.length > 30
+                          ? item.bookName.substring(0, 30) + "..."
+                          : item.bookName}
+                      </Typography>
                       <Typography>
                         {item.bookDescribe.length > 25
                           ? item.bookDescribe.substring(0, 24) + "..."

@@ -1,6 +1,7 @@
 import {
   AuthorPayload,
   CategoryPayload,
+  CommentPayLoad,
   SearchPayLoad,
 } from "@/models/general";
 import axiosClient from "./axios-client";
@@ -42,5 +43,14 @@ export const generalApi = {
   },
   search(payload: SearchPayLoad) {
     return axiosClient.post("/search/", payload);
+  },
+  getBook(idBook: number) {
+    return axiosClient.get("/book/get/" + idBook);
+  },
+  createComment(payload: CommentPayLoad) {
+    return axiosClient.post("/comment/create", payload);
+  },
+  getComments(idBook: number) {
+    return axiosClient.get("/comment/" + idBook);
   },
 };
