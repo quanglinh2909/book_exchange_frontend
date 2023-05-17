@@ -1,7 +1,7 @@
 import { PATH_API } from "@/constants";
 import { Grid, Stack, Typography, Card } from "@mui/material";
-import * as React from "react";
-
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 export interface IItemBookProps {
   data?: any;
 }
@@ -9,8 +9,32 @@ export interface IItemBookProps {
 export default function ItemBook(props: IItemBookProps) {
   const { data } = props;
   const base64Flag = "data:image/jpeg;base64,";
+  const router = useRouter();
+  const fowardPage = (idBook: string) => {
+    router.push(
+      {
+        pathname: "/details-page",
+        query: {
+          idBook: idBook,
+        },
+      },
+      "/details-page"
+    );
+  };
+  useEffect(() => {
+    console.log(props.data);
+  });
   return (
-    <Grid item xs={6} sm={4} md={4} lg={4} xl={4} sx={{ cursor: "pointer" }}>
+    <Grid
+      onClick={() => fowardPage(props.data.bookId)}
+      item
+      xs={6}
+      sm={4}
+      md={4}
+      lg={4}
+      xl={4}
+      sx={{ cursor: "pointer" }}
+    >
       <Card>
         <Stack>
           <Stack sx={{ height: "250px" }}>

@@ -11,3 +11,8 @@ export interface CategoryPayload {
 export interface SearchPayLoad {
   keyword: string;
 }
+export interface CommentPayLoad {
+  content: string;
+  idUser: number;
+  idBook: number;
+}

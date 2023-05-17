@@ -17,11 +17,6 @@ const configLeftMenu = [
     Icon: GradeIcon,
   },
   {
-    title: "Đã lưu",
-    path: "/save-book",
-    Icon: SaveIcon,
-  },
-  {
     title: "Tác giả",
     path: "/author",
     Icon: Person3Icon,
