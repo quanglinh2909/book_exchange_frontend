@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { MainLayout } from "@/components";
+import Link from "next/link";
 
 export interface IRegisterProps {}
 
@@ -51,21 +52,33 @@ export default function Register(props: IRegisterProps) {
     }
   };
   return (
-    <Stack sx={{ alignItems: "center", marginTop: "100px" ,background:"linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",width:'60%',
-    marginLeft:'290px', borderRadius:'15px',boxShadow:'0 0 10px rgba(0,0,0,0.5)' }}>
+    <Stack
+      sx={{
+        alignItems: "center",
+        background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",
+        width: "100%",
+        height: "100vh",
+        borderRadius: "15px",
+        boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+      }}
+    >
       <Stack
         sx={{
           width: "500px",
-          height: "auto",
+          height: "600px",
           alignItems: "center",
           backgroundColor: "white",
-          margin:'100px',
+          margin: "100px",
           padding: "20px",
           border: "1px solid grey",
           borderRadius: "5px",
         }}
       >
-        <Typography variant="h4" gutterBottom sx={{fontWeight:'600'}}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ fontWeight: "600", color: "#000" }}
+        >
           Register
         </Typography>
         <TextField
@@ -100,12 +113,28 @@ export default function Register(props: IRegisterProps) {
           onChange={(e) => setPass(e.target.value)}
           autoComplete="current-password"
         />
-        <Button variant="contained" onClick={handleRegister} sx={{ width: "100%", marginBottom: 1,borderRadius:'50px',
-        backgroundColor:"blue !important"}}>
-          Đăng ký
+        <Button
+          variant="contained"
+          onClick={handleRegister}
+          sx={{
+            width: "100%",
+            marginBottom: 1,
+            borderRadius: "50px",
+            backgroundColor: "blue !important",
+          }}
+        >
+          Register
         </Button>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: "600", color: "#000", mt: 2 }}
+        >
+          If you have an account?{" "}
+          <Link style={{ color: "blue" }} href="/login">
+            Login
+          </Link>
+        </Typography>
       </Stack>
     </Stack>
   );
 }
-Register.Layout = MainLayout;

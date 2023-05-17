@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import { MainLayout } from "@/components";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export interface ILoginProps {}
 
@@ -33,7 +34,7 @@ export default function Login(props: ILoginProps) {
         password: pass,
       });
       enqueueSnackbar("Đăng nhập thành công", { variant: "success" });
-      router.push("/");
+      router.push("/home");
     } catch (error: any) {
       console.log(error);
       if (error?.response?.data?.message) {
@@ -46,22 +47,34 @@ export default function Login(props: ILoginProps) {
     }
   };
   return (
-    <Stack sx={{ alignItems: "center", marginTop: "100px",background:"linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",width:'60%',
-                marginLeft:'290px', borderRadius:'15px',boxShadow:'0 0 10px rgba(0,0,0,0.5)' }}>
+    <Stack
+      sx={{
+        alignItems: "center",
+        background: "linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%)",
+        width: "100%",
+        height: "100vh",
+        borderRadius: "15px",
+        boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+      }}
+    >
       <Stack
         sx={{
           width: "500px",
-          height: "auto",
+          height: "500px",
           alignItems: "center",
-          margin:"100px",
+          margin: "100px",
           padding: "20px",
           border: "1px solid grey",
           borderRadius: "5px",
-          backgroundColor:'white',
+          backgroundColor: "white",
         }}
       >
-        <Typography variant="h3" padding={"5px 0 10px 0"} sx={{fontWeight:'600'}}>
-          Login Form
+        <Typography
+          variant="h3"
+          padding={"5px 0 10px 0"}
+          sx={{ fontWeight: "600", color: "#000" }}
+        >
+          Login
         </Typography>
         <TextField
           required
@@ -81,13 +94,28 @@ export default function Login(props: ILoginProps) {
           onChange={(e) => setpass(e.target.value)}
           value={pass}
         />
-        <Button variant="contained" sx={{ width: "100%", marginBottom: 1,borderRadius:'50px',
-        backgroundColor:"blue !important"}} onClick={handleLogin}>
-          Đăng Nhập
+        <Button
+          variant="contained"
+          sx={{
+            width: "100%",
+            marginBottom: 1,
+            borderRadius: "50px",
+            backgroundColor: "blue !important",
+          }}
+          onClick={handleLogin}
+        >
+          Login
         </Button>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: "600", color: "#000", mt: 2 }}
+        >
+          {"Don't have an account?"}
+          <Link style={{ color: "blue" }} href="/register">
+            Sign up
+          </Link>
+        </Typography>
       </Stack>
     </Stack>
   );
 }
-
-Login.Layout = MainLayout;
