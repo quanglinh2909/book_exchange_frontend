@@ -5,6 +5,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import Person3Icon from "@mui/icons-material/Person3";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import HomeIcon from "@mui/icons-material/Home";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 const configLeftMenu = [
   {
     title: "Home",
@@ -22,10 +23,16 @@ const configLeftMenu = [
     Icon: Person3Icon,
   },
   {
+    title: "Thông báo",
+    path: "/notification",
+    Icon: NotificationsIcon,
+  },
+  {
     title: "Sách của tôi",
     path: "/book",
     Icon: MenuBookIcon,
   },
+
   // {
   //   title: "Not found",
   //   path: "/404",
