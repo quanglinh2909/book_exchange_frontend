@@ -8,7 +8,6 @@ export interface IItemBookProps {
 
 export default function ItemBook(props: IItemBookProps) {
   const { data } = props;
-  const base64Flag = "data:image/jpeg;base64,";
   const router = useRouter();
   const fowardPage = (idBook: string) => {
     router.push("/details-page?idBook=" + idBook);
@@ -31,7 +30,7 @@ export default function ItemBook(props: IItemBookProps) {
         <Stack>
           <Stack sx={{ height: "250px" }}>
             <img
-              src={base64Flag + data?.productImages[0]?.picByte}
+              src={PATH_API + data?.image}
               style={{
                 width: "100%",
                 height: "100%",
