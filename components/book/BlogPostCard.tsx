@@ -22,7 +22,7 @@ import { fDate, fShortenNumber } from "@/utils";
 import SvgColor from "./SvgColor";
 import Iconify from "./Iconify";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // ----------------------------------------------------------------------
 
 const StyledCardMedia = styled("div")({
@@ -70,11 +70,11 @@ export default function BlogPostCard({ post, index }: any) {
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
   const base64Flag = "data:image/jpeg;base64,";
-  const POST_INFO = [
-    { number: 20, icon: "eva:message-circle-fill" },
-    { number: 30, icon: "eva:eye-fill" },
-    { number: 43, icon: "eva:share-fill" },
-  ];
+  // const POST_INFO = [
+  //   { number: 20, icon: "eva:message-circle-fill" },
+  //   { number: 30, icon: "eva:eye-fill" },
+  //   { number: 43, icon: "eva:share-fill" },
+  // ];
   const anchorRef = useRef<HTMLButtonElement>(null);
   const [openAction, setOpenAction] = useState(false);
   const handleToggle = (e: any) => {
@@ -89,6 +89,9 @@ export default function BlogPostCard({ post, index }: any) {
     }
     setOpenAction(false);
   };
+  useEffect(() => {
+    //  console.log(post);
+  });
   return (
     <Grid
       item
@@ -173,14 +176,14 @@ export default function BlogPostCard({ post, index }: any) {
                       aria-labelledby="composition-button"
                       autoFocusItem={openAction}
                     >
-                      <MenuItem
+                      {/* <MenuItem
                         sx={{ textTransform: "none" }}
                         onClick={(e) => {
                           handleCloseAction(e);
                         }}
                       >
                         Sửa
-                      </MenuItem>
+                      </MenuItem> */}
                       <MenuItem
                         sx={{ textTransform: "none" }}
                         onClick={(e) => {
@@ -215,7 +218,7 @@ export default function BlogPostCard({ post, index }: any) {
           <Typography
             gutterBottom
             variant="caption"
-            sx={{ color: "text.disabled", display: "block" }}
+            sx={{ color: "#fff", display: "block" }}
           >
             {fDate(createdAt)}
           </Typography>
@@ -234,7 +237,7 @@ export default function BlogPostCard({ post, index }: any) {
             {bookName}
           </StyledTitle>
 
-          <StyledInfo>
+          {/* <StyledInfo>
             {POST_INFO.map((info, index) => (
               <Box
                 key={index}
@@ -256,7 +259,7 @@ export default function BlogPostCard({ post, index }: any) {
                 </Typography>
               </Box>
             ))}
-          </StyledInfo>
+          </StyledInfo> */}
         </CardContent>
       </Card>
     </Grid>

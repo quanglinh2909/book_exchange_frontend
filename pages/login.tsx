@@ -1,5 +1,5 @@
-import { authApi } from "@/api-client";
-import { setLoading } from "@/store";
+import { authApi, generalApi } from "@/api-client";
+import { setLoading, setUser } from "@/store";
 import { Stack, Button, Typography } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import * as React from "react";
@@ -33,8 +33,11 @@ export default function Login(props: ILoginProps) {
         email: email,
         password: pass,
       });
+      const { data: profile } = await generalApi.profile();
+      console.log(profile);
+      dispatch(setUser(profile));
       enqueueSnackbar("Đăng nhập thành công", { variant: "success" });
-      router.push("/");
+      router.push("/home");
     } catch (error: any) {
       console.log(error);
       if (error?.response?.data?.message) {
@@ -46,6 +49,7 @@ export default function Login(props: ILoginProps) {
       dispatch(setLoading(false));
     }
   };
+
   return (
     <Stack
       sx={{
