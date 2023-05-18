@@ -114,6 +114,7 @@ export default function Detail(props: IDetailProps) {
   const favorite = async () => {
     try {
       const { data } = await generalApi.favorite(book.bookId);
+      console.log(data);
       if (data && data.errors == null) {
         const { data: profile } = await generalApi.profile();
         dispath(setUser(profile));

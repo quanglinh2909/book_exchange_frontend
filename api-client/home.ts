@@ -1,6 +1,5 @@
 import { AuthorPayload, CategoryPayload } from "@/models/general";
 import axiosClient from "./axios-client";
-import axios from "axios";
 
 export const HomeApi = {
   getListNewBooks() {
@@ -9,4 +8,4 @@ export const HomeApi = {
   getListBookCategory() {
     return axiosClient.get("/topbookCategory");
   },
-}
+};
