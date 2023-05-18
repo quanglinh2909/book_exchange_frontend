@@ -1,4 +1,5 @@
 import { generalApi } from "@/api-client";
+import { PATH_API } from "@/constants";
 import { fDate } from "@/utils";
 import {
   Avatar,
@@ -64,7 +65,7 @@ export default function Notify(props: INotifyProps) {
           </Stack>
           <Box
             component={"img"}
-            src={base64Flag + props.notify.book.productImages[0].picByte}
+            src={PATH_API + props.notify.book.image}
             sx={{
               width: "50px",
               height: "50px",

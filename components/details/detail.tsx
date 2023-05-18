@@ -21,13 +21,13 @@ import { useEffect, useState } from "react";
 import { CommentPayLoad } from "@/models/general";
 import { useDispatch, useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
-import { setUser } from "@/store";
+import { setNotify, setUser } from "@/store";
 import CommentItem from "../comment/comment-item";
+import { PATH_API } from "@/constants";
 export default function Detail(props: IDetailProps) {
   const router = useRouter();
   const { idBook } = router.query;
   const [book, setBook] = useState<any>();
-  const base64Flag = "data:image/jpeg;base64,";
   const [isfavorite, setIsFavorite] = useState(false);
   const [isOrder, setIsOrder] = useState(false);
   const [description, setDescription] = useState("");
@@ -36,6 +36,7 @@ export default function Detail(props: IDetailProps) {
   const [expand, setExpand] = useState<boolean | undefined>();
   const user = useSelector((state: any) => state.user);
   const dispath = useDispatch();
+  const notify = useSelector((state: any) => state.notify.listNotify);
   useEffect(() => {
     if (idBook === undefined) {
       return;
@@ -43,8 +44,9 @@ export default function Detail(props: IDetailProps) {
     const fetch = async () => {
       const { data } = await generalApi.getBook(Number(idBook));
       console.log(data);
-      const { data: profile } = await generalApi.profile();
-      const { data: listNotify } = await generalApi.getAllNotify(profile.id);
+      const { data: listNotify } = await generalApi.getAllNotify(
+        data.userCreate.id
+      );
       if (
         listNotify.filter((i: any) => i.book.bookId === data.bookId).length > 0
       ) {
@@ -161,10 +163,7 @@ export default function Detail(props: IDetailProps) {
     console.log(book.bookId);
     try {
       const { data } = await generalApi.createNotify(payload);
-      console.log(data);
       setIsOrder(true);
-      const { data: profile } = await generalApi.profile();
-      dispath(setUser(profile));
     } catch (error: any) {
       //get message error
       const { errors } = error.response.data;
@@ -190,7 +189,7 @@ export default function Detail(props: IDetailProps) {
           <Box
             component="img"
             sx={{ objectFit: "cover" }}
-            src={base64Flag + book.productImages[0]?.picByte}
+            src={PATH_API + book.image}
           ></Box>
         </Grid>
         <Grid

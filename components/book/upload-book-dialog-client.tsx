@@ -87,7 +87,6 @@ export default function UploadBookDialogClient(
         enqueueSnackbar(message, { variant: "error" });
       }
     };
-
     fetchCategory();
     fetchAuthor();
   }, []);

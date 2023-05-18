@@ -1,5 +1,5 @@
 import { generalApi } from "@/api-client";
-import { setLoading, setUser } from "@/redux/index";
+import { setLoading, setNotify, setUser } from "@/redux/index";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,8 @@ export function Auth({ children }: AuthAminProps) {
     (async () => {
       try {
         const { data } = await generalApi.profile();
-        console.log(data);
+        const { data: notify } = await generalApi.getAllNotify(data.id);
+        dispatch(setNotify(notify));
         dispatch(setLoading(false));
         dispatch(setUser(data));
         if (!data?.id) {
