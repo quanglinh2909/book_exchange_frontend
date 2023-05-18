@@ -13,6 +13,5 @@ export interface SearchPayLoad {
 }
 export interface CommentPayLoad {
   content: string;
-  idUser: number;
   idBook: number;
 }

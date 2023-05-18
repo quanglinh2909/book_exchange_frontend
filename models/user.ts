@@ -20,4 +20,5 @@ export interface UserModel {
   role: string;
   status: string;
   follows: Array<any>;
+  listNotify: Array<any>;
 }
