@@ -25,6 +25,9 @@ const SocketCustom = (Props: TestProps) => {
     socket.on("notification", function (data: any) {
       console.log("message", data);
     });
+    socket.on("notiffdf", function (data: any) {
+      console.log("message", data);
+    });
   }, [profile?.id]);
 
   return <></>;

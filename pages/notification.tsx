@@ -10,6 +10,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Notify from "@/components/notification/notify";
 import { useSelector } from "react-redux";
 import { generalApi } from "@/api-client";
+import { useGridRegisterStrategyProcessor } from "@mui/x-data-grid/internals";
 
 export interface INotificationProps {}
 const Item = styled(Paper)(({ theme }) => ({
@@ -22,89 +23,11 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Notification(props: INotificationProps) {
   const user = useSelector((state: any) => state.user);
-  const [listNotify, setListNotify] = useState<any>([]);
+  const [listNotify, setListNotify] = useState([]);
+  const notifys = useSelector((state: any) => state.notify.listNotify);
   useEffect(() => {
-    const fetch = async () => {
-      const { data } = await generalApi.getAllNotify(user.id);
-      setListNotify(data);
-      console.log(data);
-    };
-    fetch();
-  }, []);
-  const data = [
-    {
-      user: {
-        name: "Nguyễn Văn Hậu",
-        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
-        phone: "09871234455",
-      },
-      book: {
-        id: "10",
-        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
-      },
-    },
-    {
-      user: {
-        name: "Nguyễn Văn Hậu",
-        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
-        phone: "09871234455",
-      },
-      book: {
-        id: "10",
-        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
-      },
-    },
-    {
-      user: {
-        name: "Nguyễn Văn Hậu",
-        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
-        phone: "09871234455",
-      },
-      book: {
-        id: "10",
-        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
-      },
-    },
-    {
-      user: {
-        name: "Nguyễn Văn Hậu",
-        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
-        phone: "09871234455",
-      },
-      book: {
-        id: "10",
-        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
-      },
-    },
-    {
-      user: {
-        name: "Nguyễn Văn Hậu",
-        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
-        phone: "09871234455",
-      },
-      book: {
-        id: "10",
-        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
-      },
-    },
-    {
-      user: {
-        name: "Nguyễn Văn Hậu",
-        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
-        phone: "09871234455",
-      },
-      book: {
-        id: "10",
-        name: "Nghĩ giàu làm giàu",
-        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
-      },
-    },
-  ];
+    setListNotify(notifys);
+  }, [notifys]);
   return (
     <Stack
       sx={{
@@ -144,7 +67,7 @@ function Notification(props: INotificationProps) {
             sx={{ width: "90% !important" }}
           >
             {listNotify.map((item: any, index: number) => (
-              <Notify notify={item} />
+              <Notify key={index} notify={item} />
             ))}
           </Grid>
         </Stack>
