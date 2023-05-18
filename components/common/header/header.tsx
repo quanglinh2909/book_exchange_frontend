@@ -129,10 +129,6 @@ export default function Header(props: IHeaderProps) {
         alignItems={"center"}
         spacing={2}
       >
-        <Badge badgeContent={4} color="primary">
-          <NotificationsIcon />
-        </Badge>
-
         <Avatar sx={{ width: "35px", height: "35px" }} />
         <Link href="/login">
           <Typography

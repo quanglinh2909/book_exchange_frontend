@@ -11,18 +11,10 @@ export default function ItemBook(props: IItemBookProps) {
   const base64Flag = "data:image/jpeg;base64,";
   const router = useRouter();
   const fowardPage = (idBook: string) => {
-    router.push(
-      {
-        pathname: "/details-page",
-        query: {
-          idBook: idBook,
-        },
-      },
-      "/details-page"
-    );
+    router.push("/details-page?idBook=" + idBook);
   };
   useEffect(() => {
-    console.log(props.data);
+    //console.log(props.data);
   });
   return (
     <Grid
@@ -33,9 +25,9 @@ export default function ItemBook(props: IItemBookProps) {
       md={4}
       lg={4}
       xl={4}
-      sx={{ cursor: "pointer" }}
+      sx={{ cursor: "pointer", minHeight: "290px" }}
     >
-      <Card>
+      <Card sx={{ height: "100%" }}>
         <Stack>
           <Stack sx={{ height: "250px" }}>
             <img

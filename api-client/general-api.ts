@@ -11,6 +11,9 @@ export const generalApi = {
   createAuthor(payload: AuthorPayload) {
     return axiosClient.post("/author/create", payload);
   },
+  profile() {
+    return axiosClient.get("/users/profile");
+  },
   getAllAuthor() {
     return axiosClient.get("/author/getAll");
   },
@@ -19,6 +22,9 @@ export const generalApi = {
   },
   getAllBook() {
     return axiosClient.get("/books/getAll");
+  },
+  getAllBookUser(idUser: string) {
+    return axiosClient.get("/books/getAll/" + idUser);
   },
   getAllCategory() {
     return axiosClient.get("/category/getAll");
@@ -52,5 +58,23 @@ export const generalApi = {
   },
   getComments(idBook: number) {
     return axiosClient.get("/comment/" + idBook);
+  },
+  favorite(idBook: string) {
+    return axiosClient.put("/book/favorite/" + idBook);
+  },
+  unfavorite(idBook: string) {
+    return axiosClient.put("/book/unfavorite/" + idBook);
+  },
+  getListBookAuthor() {
+    return axiosClient.get("/topBookAuthor");
+  },
+  createNotify(payload: any) {
+    return axiosClient.post("/notify/create", payload);
+  },
+  read(idNotify: string) {
+    return axiosClient.put("/notify/" + idNotify);
+  },
+  getAllNotify(idUser: string) {
+    return axiosClient.get("/notify/get/" + idUser);
   },
 };
