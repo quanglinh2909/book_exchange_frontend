@@ -4,9 +4,11 @@ import Logo from "../logo";
 import LeftMenuAdminItem from "./left-menu-admin-item";
 import navConfig from "@/mock/config";
 import configLeftMenu from "@/mock/config-left-menu";
+import { useSelector } from "react-redux";
 export interface ILeftMenuProps {}
 
 export default function LeftMenu(props: ILeftMenuProps) {
+  const user = useSelector((state: any) => state.user);
   return (
     <Drawer
       open
@@ -48,7 +50,7 @@ export default function LeftMenu(props: ILeftMenuProps) {
             variant="subtitle2"
             sx={{ color: "#212B36", fontSize: "15px", fontWeight: "bold" }}
           >
-            Hoàng quang Linh
+            {user.name}
           </Typography>
         </Stack>
         <Stack spacing={1}>

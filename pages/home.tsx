@@ -1,3 +1,4 @@
+import { generalApi } from "@/api-client";
 import { HomeApi } from "@/api-client/home";
 import Main2Layout from "@/components/common/layout/main2";
 import NewBookHome from "@/components/home/new-book";
@@ -10,9 +11,10 @@ import { useDispatch } from "react-redux";
 export interface IHomePageProps {}
 
 export default function HomePage(props: IHomePageProps) {
-  const [dataListBook, setDataListBook] = React.useState();
-  const [dataListBookCategory, setDataListBookCategory] =
-    React.useState<any[]>();
+  const [dataListBook, setDataListBook] = React.useState<any>([]);
+  const [dataListBookCategory, setDataListBookCategory] = React.useState<any>(
+    []
+  );
   const dispatch = useDispatch();
   const dataBook = async () => {
     dispatch(setLoading(true));
@@ -20,6 +22,8 @@ export default function HomePage(props: IHomePageProps) {
     const { data: dataCategory } = await HomeApi.getListBookCategory();
     setDataListBook(data);
     setDataListBookCategory(dataCategory);
+    console.log(data);
+    console.log(dataCategory);
     dispatch(setLoading(false));
   };
   useEffect(() => {

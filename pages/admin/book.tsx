@@ -15,17 +15,6 @@ export interface IBookAdminPageProps {}
 export default function BookAdminPage(props: IBookAdminPageProps) {
   const [open, setOpen] = useState(false);
   const [books, setBooks] = useState([]);
-  const post = {
-    cover: "/assets/images/covers/cover_1.jpg",
-    title: "How to create a blog",
-    view: 999,
-    comment: 888,
-    share: 777,
-    author: {
-      name: "Minh Nguyen",
-      avatarUrl: `/assets/images/avatars/avatar_1.jpg`,
-    },
-  };
   useEffect(() => {
     const fetch = async () => {
       try {

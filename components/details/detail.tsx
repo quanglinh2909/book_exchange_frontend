@@ -12,13 +12,16 @@ import {
   OutlinedInput,
   Collapse,
 } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AddPhotoAlternate } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import SendIcon from "@mui/icons-material/Send";
 export interface IDetailProps {}
 import { useEffect, useState } from "react";
 import { CommentPayLoad } from "@/models/general";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { enqueueSnackbar } from "notistack";
+import { setUser } from "@/store";
 export default function Detail(props: IDetailProps) {
   const onClickShow = () => {
     setDescription(book.bookDescribe.replace("&nbsp;", " "));
@@ -56,16 +59,25 @@ export default function Detail(props: IDetailProps) {
   const { idBook } = router.query;
   const [book, setBook] = useState<any>();
   const base64Flag = "data:image/jpeg;base64,";
+  const [isfavorite, setIsFavorite] = useState(false);
   const [description, setDescription] = useState("");
   const [comment, setComment] = useState("");
   const [listComment, setListComment] = useState([]);
   const [expand, setExpand] = useState<boolean | undefined>();
+  const user = useSelector((state: any) => state.user);
+  const dispath = useDispatch();
   if (idBook !== undefined) {
     useEffect(() => {
       const fetch = async () => {
         const { data } = await generalApi.getBook(Number(idBook));
         setBook(data);
         console.log(data);
+        console.log(user);
+        if (
+          user.follows.filter((b: any) => b.bookId === data.bookId).length > 0
+        ) {
+          setIsFavorite(true);
+        }
         setDescription(
           data.bookDescribe.length > 500
             ? data.bookDescribe.substring(0, 500).replace("&nbsp;", " ") + "..."
@@ -76,7 +88,48 @@ export default function Detail(props: IDetailProps) {
       fetch();
     }, []);
   }
-
+  const favorite = async () => {
+    try {
+      const { data } = await generalApi.favorite(book.bookId);
+      if (data && data.errors == null) {
+        const { data: profile } = await generalApi.profile();
+        dispath(setUser(profile));
+        setIsFavorite(true);
+      } else if (data?.errors?.errorMessage) {
+        enqueueSnackbar(data?.errors?.errorMessage, { variant: "error" });
+      }
+    } catch (error: any) {
+      //get message error
+      const { errors } = error.response.data;
+      let message = "";
+      for (const key in errors) {
+        message += errors[key];
+        break;
+      }
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
+  const unfavorite = async () => {
+    try {
+      const { data } = await generalApi.unfavorite(book.bookId);
+      if (data && data.errors == null) {
+        const { data: profile } = await generalApi.profile();
+        dispath(setUser(profile));
+        setIsFavorite(false);
+      } else if (data?.errors?.errorMessage) {
+        enqueueSnackbar(data?.errors?.errorMessage, { variant: "error" });
+      }
+    } catch (error: any) {
+      //get message error
+      const { errors } = error.response.data;
+      let message = "";
+      for (const key in errors) {
+        message += errors[key];
+        break;
+      }
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
   return book !== undefined ? (
     <Stack
       sx={{
@@ -185,15 +238,22 @@ export default function Detail(props: IDetailProps) {
                 Yêu cầu đổi sách
               </Button>
               <Button
+                endIcon={<FavoriteIcon />}
+                onClick={() => {
+                  isfavorite ? unfavorite() : favorite();
+                }}
                 sx={{
-                  backgroundColor: "#fa7979 !important",
+                  backgroundColor: isfavorite
+                    ? "#f16464 !important"
+                    : "#ed9191 !important",
+
+                  "& svg": {
+                    color: isfavorite ? "#ff0101" : "#fff",
+                  },
                   color: "#fff",
                   textTransform: "none",
                   fontWeight: "100",
                   marginLeft: "5px",
-                  "&:hover": {
-                    backgroundColor: "#ff3f3f !important",
-                  },
                 }}
               >
                 Yêu thích

@@ -3,22 +3,47 @@ import UploadBookDialog from "@/components/book/upload-book-dialog";
 import Main2Layout from "@/components/common/layout/main2";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Grid, Stack } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { generalApi } from "@/api-client";
+import UploadBookDialogClient from "@/components/book/upload-book-dialog-client";
+import { useSelector } from "react-redux";
 export interface IBookPageProps {}
 
 export default function BookPage(props: IBookPageProps) {
   const [open, setOpen] = useState(false);
-  const post = {
-    cover: "/assets/images/covers/cover_1.jpg",
-    title: "How to create a blog",
-    view: 999,
-    comment: 888,
-    share: 777,
-    author: {
-      name: "Minh Nguyen",
-      avatarUrl: `/assets/images/avatars/avatar_1.jpg`,
-    },
-  };
+  const user = useSelector((state: any) => state.user);
+  // const post = {
+  //   cover: "/assets/images/covers/cover_1.jpg",
+  //   title: "How to create a blog",
+  //   view: 999,
+  //   comment: 888,
+  //   share: 777,
+  //   author: {
+  //     name: "Minh Nguyen",
+  //     avatarUrl: `/assets/images/avatars/avatar_1.jpg`,
+  //   },
+  // };
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await generalApi.getAllBookUser(user.id);
+        if (data && data.errors == null) {
+          setBooks(data);
+        }
+      } catch (error: any) {
+        const { errors } = error.response.data;
+        let message = "";
+        for (const key in errors) {
+          message += errors[key];
+          break;
+        }
+        enqueueSnackbar(message, { variant: "error" });
+      }
+    };
+    fetch();
+  }, []);
   return (
     <Stack sx={{ bgcolor: "#fff" }} p={"20px 20px"}>
       <Stack justifyContent={"space-between"} direction={"row"}>
@@ -33,7 +58,7 @@ export default function BookPage(props: IBookPageProps) {
           endIcon={<AddIcon />}
           onClick={() => setOpen(true)}
         >
-          Thêm
+          Đăng tải
         </Button>
       </Stack>
       <Grid
@@ -55,17 +80,16 @@ export default function BookPage(props: IBookPageProps) {
           },
         }}
       >
-        <BlogPostCard post={post} index={0} />
-        <BlogPostCard post={post} index={1} />
-        <BlogPostCard post={post} index={2} />
-        <BlogPostCard post={post} index={3} />
-        <BlogPostCard post={post} index={4} />
-        <BlogPostCard post={post} index={5} />
-        <BlogPostCard post={post} index={6} />
-        <BlogPostCard post={post} index={7} />
-        <Grid item xs={12} md={12}></Grid>
+        {books.map((item: any, index) => (
+          <BlogPostCard key={index} post={item} index={0} />
+        ))}
+        <UploadBookDialogClient
+          books={books}
+          setBooks={setBooks}
+          open={open}
+          setOpen={setOpen}
+        />
       </Grid>
-      <UploadBookDialog open={open} setOpen={setOpen} />
     </Stack>
   );
 }
