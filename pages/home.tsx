@@ -17,14 +17,16 @@ export default function HomePage(props: IHomePageProps) {
   );
   const dispatch = useDispatch();
   const dataBook = async () => {
-    dispatch(setLoading(true));
-    const { data } = await HomeApi.getListNewBooks();
-    const { data: dataCategory } = await HomeApi.getListBookCategory();
-    setDataListBook(data);
-    setDataListBookCategory(dataCategory);
-    console.log(data);
-    console.log(dataCategory);
-    dispatch(setLoading(false));
+    try {
+      dispatch(setLoading(true));
+      const { data } = await HomeApi.getListNewBooks();
+      const { data: dataCategory } = await HomeApi.getListBookCategory();
+      setDataListBook(data);
+      setDataListBookCategory(dataCategory);
+    } catch (error) {
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
   useEffect(() => {
     dataBook();
