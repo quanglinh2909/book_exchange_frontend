@@ -23,6 +23,7 @@ import SvgColor from "./SvgColor";
 import Iconify from "./Iconify";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useEffect, useRef, useState } from "react";
+import { PATH_API } from "@/constants";
 // ----------------------------------------------------------------------
 
 const StyledCardMedia = styled("div")({
@@ -66,10 +67,10 @@ const StyledCover = styled("img")({
 // ----------------------------------------------------------------------
 
 export default function BlogPostCard({ post, index }: any) {
-  const { productImages, bookName, author, createdAt } = post;
+  const { image, bookName, author, createdAt } = post;
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
-  const base64Flag = "data:image/jpeg;base64,";
+
   // const POST_INFO = [
   //   { number: 20, icon: "eva:message-circle-fill" },
   //   { number: 30, icon: "eva:eye-fill" },
@@ -199,10 +200,7 @@ export default function BlogPostCard({ post, index }: any) {
             </Stack>
           </Button>
 
-          <StyledCover
-            alt={bookName}
-            src={base64Flag + productImages[0].picByte}
-          />
+          <StyledCover alt={bookName} src={PATH_API + image} />
         </StyledCardMedia>
 
         <CardContent

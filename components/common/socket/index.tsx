@@ -9,7 +9,7 @@ const SocketCustom = (Props: TestProps) => {
   const dispath = useDispatch();
   useEffect(() => {
     if (!profile?.id) return;
-    socket = io("http://localhost:4100", { transports: ["websocket"] } as any);
+    socket = io("http://localhost:4100/chat");
 
     socket.on("connect", function (t: any) {
       console.log("connect");
