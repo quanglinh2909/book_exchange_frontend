@@ -68,4 +68,13 @@ export const generalApi = {
   getListBookAuthor() {
     return axiosClient.get("/topBookAuthor");
   },
+  createNotify(payload: any) {
+    return axiosClient.post("/notify/create", payload);
+  },
+  read(idNotify: string) {
+    return axiosClient.put("/notify/" + idNotify);
+  },
+  getAllNotify(idUser: string) {
+    return axiosClient.get("/notify/get/" + idUser);
+  },
 };

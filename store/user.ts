@@ -12,6 +12,7 @@ const initialState: UserModel = {
   role: "",
   status: "",
   follows: [],
+  listNotify: [],
 };
 const user = createSlice({
   name: "user",

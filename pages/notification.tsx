@@ -1,88 +1,156 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Main2Layout from "@/components/common/layout/main2";
-import { Stack ,Typography} from "@mui/material";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Avatar, Link, Stack, Typography } from "@mui/material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Notify from "@/components/notification/notify";
+import { useSelector } from "react-redux";
+import { generalApi } from "@/api-client";
 
 export interface INotificationProps {}
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: 'center',
+  textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
 function Notification(props: INotificationProps) {
-  const [isRead,setIsRead ] =useState(false);
-  const handleClick = () => {
-    setIsRead(true);
-  };
-  const styles = {
-    borderLeft: isRead ? 'none' : '2px solid red',
-    paddingLeft: '5px',
-    backgroundColor: 'red',
-    color: 'black',
-    fontWeight: 'bold',
-    cursor: 'pointer'
-  };
+  const user = useSelector((state: any) => state.user);
+  const [listNotify, setListNotify] = useState<any>([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await generalApi.getAllNotify(user.id);
+      setListNotify(data);
+      console.log(data);
+    };
+    fetch();
+  }, []);
+  const data = [
+    {
+      user: {
+        name: "Nguyễn Văn Hậu",
+        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
+        phone: "09871234455",
+      },
+      book: {
+        id: "10",
+        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
+      },
+    },
+    {
+      user: {
+        name: "Nguyễn Văn Hậu",
+        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
+        phone: "09871234455",
+      },
+      book: {
+        id: "10",
+        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
+      },
+    },
+    {
+      user: {
+        name: "Nguyễn Văn Hậu",
+        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
+        phone: "09871234455",
+      },
+      book: {
+        id: "10",
+        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
+      },
+    },
+    {
+      user: {
+        name: "Nguyễn Văn Hậu",
+        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
+        phone: "09871234455",
+      },
+      book: {
+        id: "10",
+        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
+      },
+    },
+    {
+      user: {
+        name: "Nguyễn Văn Hậu",
+        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
+        phone: "09871234455",
+      },
+      book: {
+        id: "10",
+        name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
+      },
+    },
+    {
+      user: {
+        name: "Nguyễn Văn Hậu",
+        avatar: "https://randomuser.me/api/portraits/med/men/70.jpg",
+        phone: "09871234455",
+      },
+      book: {
+        id: "10",
+        name: "Nghĩ giàu làm giàu",
+        img: "https://salt.tikicdn.com/cache/w1200/ts/product/62/b7/62/3b3a507acef199e5149f32610ad1e8d3.png",
+      },
+    },
+  ];
   return (
-  <Stack sx={{width:'100%',alignItems:'center'}}>
-    <Stack sx={{width:'90%',height:'550px'}}>
-    <Stack direction={'row'} alignItems={'center'} sx={{gap:'10px'}}><Typography sx={{borderBottom:'2px solid blue',color:'grey'}} variant="h6">Notifications</Typography> <NotificationsIcon sx={{color:'grey'}}/></Stack>
-    <Box sx={{ width: '100%',marginTop:'10px' }} style={styles} onClick={handleClick} >
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12}>
-          <Item>
-            <Stack  direction={'row'} justifyContent={'space-between'}>
-              <Stack  direction={'row'} sx={{width:'auto'}}>
-              <AccountCircleIcon sx={{width:'50px',height:'50px'}}/>
-              <Stack sx={{paddingLeft:'15px'}}>
-                <Stack direction={'row'} sx={{gap:'10px'}}>
-                  <Typography>Hậu Dog Điên</Typography>
-                  <Typography>09876545678</Typography>
-                </Stack>
-                <Typography>
-                  10 min ago
-                </Typography>               
-              </Stack>
-              </Stack>
-              <Box component={'img'} sx={{width:'50px',height:'50px', marginRight:'15px'}}></Box>
-            </Stack>
-            </Item>
-        </Grid>      
-      </Grid>
-    </Box>
-    {/* 2 */}
-    <Box sx={{ width: '100%', marginTop:'10px' }} style={styles} onClick={handleClick} >
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12}>
-          <Item>
-            <Stack  direction={'row'} justifyContent={'space-between'}>
-              <Stack  direction={'row'} sx={{width:'auto'}}>
-              <AccountCircleIcon sx={{width:'50px',height:'50px'}}/>
-              <Stack sx={{paddingLeft:'15px'}}>
-                <Stack direction={'row'} sx={{gap:'10px'}}>
-                  <Typography>Hậu Dog Điên</Typography>
-                  <Typography>09876545678</Typography>
-                </Stack>
-                <Typography>
-                  10 min ago
-                </Typography>               
-              </Stack>
-              </Stack>
-              <Box component={'img'} sx={{width:'50px',height:'50px', marginRight:'15px'}}></Box>
-            </Stack>
-            </Item>
-        </Grid>      
-      </Grid>
-    </Box>
-  </Stack>
-  </Stack>
+    <Stack
+      sx={{
+        width: "100%",
+        alignItems: "center",
+      }}
+    >
+      <Stack sx={{ width: "100%", height: "550px", alignItems: "center" }}>
+        <Stack
+          direction={"row"}
+          alignItems={"center"}
+          sx={{ marginBottom: "10px", width: "90%" }}
+        >
+          <Typography
+            sx={{
+              borderBottom: "2px solid blue",
+              width: "fit-content",
+              color: "grey",
+            }}
+            variant="h6"
+          >
+            Thông báo
+          </Typography>
+        </Stack>
+        <Stack
+          sx={{
+            width: "100%",
+            marginTop: "10px",
+            overflow: "auto",
+            height: "calc(100vh -108px)",
+            alignItems: "center",
+          }}
+        >
+          <Grid
+            container
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            sx={{ width: "90% !important" }}
+          >
+            {listNotify.map((item: any, index: number) => (
+              <Notify notify={item} />
+            ))}
+          </Grid>
+        </Stack>
+        {/* 2 */}
+      </Stack>
+    </Stack>
   );
 }
 Notification.Layout = Main2Layout;

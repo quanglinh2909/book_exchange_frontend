@@ -11,15 +11,7 @@ export default function ItemBook(props: IItemBookProps) {
   const base64Flag = "data:image/jpeg;base64,";
   const router = useRouter();
   const fowardPage = (idBook: string) => {
-    router.push(
-      {
-        pathname: "/details-page",
-        query: {
-          idBook: idBook,
-        },
-      },
-      "/details-page"
-    );
+    router.push("/details-page?idBook=" + idBook);
   };
   useEffect(() => {
     //console.log(props.data);
