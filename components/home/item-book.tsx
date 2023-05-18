@@ -22,7 +22,7 @@ export default function ItemBook(props: IItemBookProps) {
     );
   };
   useEffect(() => {
-    console.log(props.data);
+    //console.log(props.data);
   });
   return (
     <Grid
@@ -33,9 +33,9 @@ export default function ItemBook(props: IItemBookProps) {
       md={4}
       lg={4}
       xl={4}
-      sx={{ cursor: "pointer" }}
+      sx={{ cursor: "pointer", minHeight: "290px" }}
     >
-      <Card>
+      <Card sx={{ height: "100%" }}>
         <Stack>
           <Stack sx={{ height: "250px" }}>
             <img
