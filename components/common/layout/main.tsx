@@ -50,7 +50,6 @@ export function MainLayout({ children }: LayoutProps) {
           <Footer />
         </Box>
       </Stack>
-      //{" "}
     </Auth>
   );
 }

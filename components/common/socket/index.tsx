@@ -31,9 +31,9 @@ const SocketCustom = (Props: TestProps) => {
       dispath(setNotify([...notify, data]));
     });
     socket.on("comment", async function (data: any) {
-      let arr = [...store.getState().comment.listComment, data];
-      await dispath(setCommentList(arr));
-      console.log(store.getState().comment.listComment);
+      const load = store.getState().comment.isReload;
+      console.log(load);
+      dispath(setCommentList(!load));
     });
   }, [profile?.id]);
 

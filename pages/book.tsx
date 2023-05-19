@@ -12,7 +12,7 @@ export interface IBookPageProps {}
 
 export default function BookPage(props: IBookPageProps) {
   const [open, setOpen] = useState(false);
-  const user = useSelector((state: any) => state.user);
+  const user: any = useSelector((state: any) => state.user);
   // const post = {
   //   cover: "/assets/images/covers/cover_1.jpg",
   //   title: "How to create a blog",

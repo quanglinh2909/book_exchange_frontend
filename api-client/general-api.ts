@@ -77,4 +77,7 @@ export const generalApi = {
   getAllNotify(idUser: string) {
     return axiosClient.get("/notify/get/" + idUser);
   },
+  getFollows() {
+    return axiosClient.get("/users/follows/");
+  },
 };
