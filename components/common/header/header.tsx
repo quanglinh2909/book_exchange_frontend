@@ -12,6 +12,7 @@ import { useRef, useState } from "react";
 import { generalApi } from "@/api-client";
 import { SearchPayLoad } from "@/models/general";
 import Link from "next/link";
+import { PATH_API } from "@/constants";
 export interface IHeaderProps {}
 
 export default function Header(props: IHeaderProps) {
@@ -101,7 +102,7 @@ export default function Header(props: IHeaderProps) {
                       alignItems: "center",
                     }}
                   >
-                    <Avatar src={base64Flag + item.productImages[0].picByte} />
+                    <Avatar src={PATH_API + item.image} />
                     <Stack sx={{ marginLeft: "10px" }}>
                       <Typography>
                         {" "}
