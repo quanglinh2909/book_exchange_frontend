@@ -1,5 +1,6 @@
 import { generalApi } from "@/api-client";
 import { PATH_API } from "@/constants";
+import { setNotify } from "@/store";
 import { fDate } from "@/utils";
 import {
   Avatar,
@@ -11,8 +12,9 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 export interface INotifyProps {
   notify: any;
 }
@@ -26,21 +28,39 @@ export default function Notify(props: INotifyProps) {
     color: theme.palette.text.secondary,
   }));
   const [isRead, setIsRead] = useState(false);
-  const handleClick = () => {
-    setIsRead(true);
+  const notify: any = useSelector((state: any) => state.notify.listNotify);
+  const dispatch = useDispatch();
+  const handleClick = async () => {
+    if (props.notify.isRead === "READ") return;
+    try {
+      const { data } = await generalApi.read(props.notify.id);
+      const element = notify.filter((i: any) => i.id === props.notify.id)[0];
+      const index = notify.indexOf(element);
+      let newArr = [...notify];
+      newArr[index] = data;
+      dispatch(setNotify(newArr));
+    } catch (error: any) {
+      console.log(error);
+      //get message error
+      const { errors } = error.response.data;
+      let message = "";
+      for (const key in errors) {
+        message += errors[key];
+        break;
+      }
+      enqueueSnackbar(message, { variant: "error" });
+    }
   };
-  const base64Flag = "data:image/jpeg;base64,";
-
   return (
     <Grid
       item
       xs={12}
       onClick={handleClick}
-      sx={{ padding: "0 !important", marginTop: "8px" }}
+      sx={{ padding: "0 !important", marginTop: "8px", cursor: "pointer" }}
     >
       <Item
         sx={{
-          borderLeft: isRead ? "none" : "3px red solid",
+          borderLeft: props.notify.isRead === "READ" ? "none" : "3px red solid",
         }}
       >
         <Stack direction={"row"} justifyContent={"space-between"}>

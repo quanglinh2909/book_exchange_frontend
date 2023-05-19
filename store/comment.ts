@@ -9,7 +9,7 @@ const comment = createSlice({
   name: "comment",
   initialState,
   reducers: {
-    setComment(state, action) {
+    setCommentList(state, action) {
       state.listComment = action.payload;
     },
   },
@@ -17,6 +17,6 @@ const comment = createSlice({
 
 const { reducer, actions } = comment;
 
-export const { setComment } = actions;
+export const { setCommentList } = actions;
 
 export default reducer;
