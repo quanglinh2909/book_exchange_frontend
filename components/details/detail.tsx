@@ -34,29 +34,31 @@ export default function Detail(props: IDetailProps) {
   const [description, setDescription] = useState("");
   const [comment, setComment] = useState("");
   const [expand, setExpand] = useState<boolean | undefined>();
-  const user = useSelector((state: any) => state.user);
   const dispath = useDispatch();
   const notify = useSelector((state: any) => state.notify.listNotify);
-  const commentList = useSelector((state: any) => state.comment.listComment);
+  const commentList = useSelector((state: any) => state.comment);
+
+  const [listComment, setListComment] = useState([]);
   const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
+    console.log("first");
     if (idBook === undefined) {
       return;
     }
     const fetch = async () => {
       const { data } = await generalApi.getBook(Number(idBook));
-      console.log(data);
+      setListComment(data.listComment);
       const { data: listNotify } = await generalApi.getAllNotify(
         data.userCreate.id
       );
-      console.log(user.id);
-      const { data: listBook } = await generalApi.getAllBookUser(user.id);
+      const { data: profile } = await generalApi.profile();
+
+      const { data: listBook } = await generalApi.getAllBookUser(profile.id);
       console.log(listBook, "books");
       if (listBook.filter((i: any) => i.bookId === data.bookId).length > 0) {
         console.log("ok");
         setIsOwner(true);
       }
-      console.log(user.id);
       console.log(data.userCreate.id);
       if (
         listNotify.filter((i: any) => i.book.bookId === data.bookId).length > 0
@@ -65,12 +67,11 @@ export default function Detail(props: IDetailProps) {
       }
       setData(data);
     };
-    const setData = (data: any) => {
+    const setData = async (data: any) => {
       setBook(data);
-      dispath(setCommentList(data.listComment));
-      if (
-        user.follows.filter((b: any) => b.bookId === data.bookId).length > 0
-      ) {
+
+      const { data: follows } = await generalApi.getFollows();
+      if (follows.filter((b: any) => b.bookId === data.bookId).length > 0) {
         setIsFavorite(true);
       }
       setDescription(
@@ -81,7 +82,7 @@ export default function Detail(props: IDetailProps) {
       setExpand(data.bookDescribe.length > 500 ? false : undefined);
     };
     fetch();
-  }, [idBook]);
+  }, [idBook, commentList.isReload]);
 
   const onClickShow = () => {
     setDescription(book.bookDescribe.replace("&nbsp;", " "));
@@ -105,12 +106,11 @@ export default function Detail(props: IDetailProps) {
     };
     try {
       const { data } = await generalApi.createComment(payload);
-      dispath(setCommentList([...commentList, data]));
       if (data && data.errors == null) {
         setComment("");
       }
     } catch (error: any) {
-      const { errors } = error.response.data;
+      const { errors } = error?.response.data;
       let message = "";
       for (const key in errors) {
         message += errors[key];
@@ -347,9 +347,9 @@ export default function Detail(props: IDetailProps) {
         >
           <Stack sx={{ color: "#000", fontWeight: "600" }}>
             <Stack sx={{ maxHeight: "450px", overflow: "auto" }}>
-              {commentList.map((item: any, index: number) => (
-                <CommentItem key={index} comment={item} />
-              ))}
+              {listComment.map((item: any, index: number) => {
+                return <CommentItem key={index} comment={item} />;
+              })}
             </Stack>
             <Stack
               sx={{
