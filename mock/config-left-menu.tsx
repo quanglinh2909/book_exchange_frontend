@@ -22,11 +22,7 @@ const configLeftMenu = [
     path: "/author",
     Icon: Person3Icon,
   },
-  {
-    title: "Thông báo",
-    path: "/notification",
-    Icon: NotificationsIcon,
-  },
+
   {
     title: "Sách của tôi",
     path: "/book",
