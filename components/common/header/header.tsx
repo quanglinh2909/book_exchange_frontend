@@ -1,5 +1,4 @@
-import { Stack, Avatar, Badge, Typography } from "@mui/material";
-import * as React from "react";
+import { Stack, Avatar, Badge, Typography, Grid } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useRouter } from "next/router";
 import Paper from "@mui/material/Paper";
@@ -9,11 +8,35 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
+import { useRef, useState } from "react";
+import { generalApi } from "@/api-client";
+import { SearchPayLoad } from "@/models/general";
+import Link from "next/link";
+import { PATH_API } from "@/constants";
 export interface IHeaderProps {}
 
 export default function Header(props: IHeaderProps) {
   const router = useRouter();
-
+  const [name, setName] = useState("Name");
+  const base64Flag = "data:image/jpeg;base64,";
+  const [description, setDescription] = useState(
+    "Descriptionfffffffffffffffffffffffffffffffffffdd"
+  );
+  const [keyword, setKeyWork] = useState("");
+  const [results, setResults] = useState([]);
+  const search = async (keyword: string) => {
+    setKeyWork(keyword);
+    if (keyword == "") {
+      setResults([]);
+      return;
+    }
+    const payload: SearchPayLoad = {
+      keyword: keyword,
+    };
+    const { data } = await generalApi.search(payload);
+    setResults(data);
+    console.log(data);
+  };
   return (
     <Stack
       direction={"row"}
@@ -24,7 +47,7 @@ export default function Header(props: IHeaderProps) {
       zIndex={100}
       bgcolor={"rgb(216,221,222)"}
     >
-      <Stack>
+      <Stack sx={{ position: "relative" }}>
         <Paper
           component="form"
           sx={{
@@ -33,15 +56,72 @@ export default function Header(props: IHeaderProps) {
             alignItems: "center",
             width: 400,
             borderRadius: "20px",
+            position: "relative",
           }}
         >
           <IconButton sx={{ p: "10px" }} aria-label="menu">
             <SearchIcon />
           </IconButton>
           <InputBase
+            value={keyword}
+            onChange={(e) => search(e.target.value)}
             sx={{ ml: 1, flex: 1 }}
             placeholder="Nhập tên sách, tác giả, thể loại..."
           />
+          {results.length !== 0 && (
+            <Grid
+              container
+              sx={{
+                position: "absolute",
+                top: "50px",
+                width: "100%",
+                left: "0",
+                background: "#fff",
+                padding: "10px",
+              }}
+            >
+              {results.map((item: any, index) => (
+                <Grid
+                  key={index}
+                  md={12}
+                  lg={12}
+                  sm={12}
+                  item
+                  sx={{
+                    height: "50px",
+                    cursor: "pointer",
+                    "&:hover": {
+                      background: "#ece8e8",
+                    },
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Avatar src={PATH_API + item.image} />
+                    <Stack sx={{ marginLeft: "10px" }}>
+                      <Typography>
+                        {" "}
+                        {item.bookName.length > 30
+                          ? item.bookName.substring(0, 30) + "..."
+                          : item.bookName}
+                      </Typography>
+                      <Typography>
+                        {item.bookDescribe.length > 25
+                          ? item.bookDescribe.substring(0, 24) + "..."
+                          : item.bookDescribe}
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                  <Divider sx={{ color: "#000", width: "100%" }} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Paper>
       </Stack>
       <Stack
@@ -50,10 +130,27 @@ export default function Header(props: IHeaderProps) {
         alignItems={"center"}
         spacing={2}
       >
-        <Badge badgeContent={4} color="primary">
-          <NotificationsIcon />
-        </Badge>
         <Avatar sx={{ width: "35px", height: "35px" }} />
+        <Link href="/login">
+          <Typography
+            color={"#000"}
+            className="hover:text-blue-500 transition duration-300 flex items-center"
+            sx={{ fontSize: "18px", cursor: "pointer" }}
+          >
+            Đăng nhập
+          </Typography>
+        </Link>
+
+        <Typography sx={{ margin: "0 8px" }}>|</Typography>
+        <Link href="/register">
+          <Typography
+            color={"#000"}
+            className="hover:text-blue-500 transition duration-300 flex items-center"
+            sx={{ fontSize: "18px", cursor: "pointer" }}
+          >
+            Đăng ký
+          </Typography>
+        </Link>
       </Stack>
     </Stack>
   );
