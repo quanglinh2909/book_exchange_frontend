@@ -5,6 +5,8 @@ import LeftMenuAdminItem from "./left-menu-admin-item";
 import navConfig from "@/mock/config";
 import configLeftMenu from "@/mock/config-left-menu";
 import { useSelector } from "react-redux";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import LeftMenuBadgeItem from "./left-menu-badge";
 export interface ILeftMenuProps {}
 
 export default function LeftMenu(props: ILeftMenuProps) {
@@ -57,6 +59,13 @@ export default function LeftMenu(props: ILeftMenuProps) {
           {configLeftMenu.map((item) => (
             <LeftMenuAdminItem key={item.title} item={item} />
           ))}
+          <LeftMenuBadgeItem
+            item={{
+              title: "Thông báo",
+              path: "/notification",
+              Icon: NotificationsIcon,
+            }}
+          />
         </Stack>
       </Stack>
     </Drawer>

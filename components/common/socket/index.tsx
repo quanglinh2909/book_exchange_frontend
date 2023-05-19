@@ -2,10 +2,14 @@ import { memo, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import io from "./socket.io-2.2.0";
+import { setCommentList, setNotify } from "@/store";
+import store from "@/store/store";
 export interface TestProps {}
 let socket: any;
 const SocketCustom = (Props: TestProps) => {
   const profile = useSelector((state: any) => state.user);
+  const notify: any = useSelector((state: any) => state.notify.listNotify);
+  const commentList = useSelector((state: any) => state.comment.listComment);
   const dispath = useDispatch();
   useEffect(() => {
     if (!profile?.id) return;
@@ -24,9 +28,12 @@ const SocketCustom = (Props: TestProps) => {
 
     socket.on("notification", function (data: any) {
       console.log("message", data);
+      dispath(setNotify([...notify, data]));
     });
-    socket.on("notiffdf", function (data: any) {
-      console.log("message", data);
+    socket.on("comment", async function (data: any) {
+      const load = store.getState().comment.isReload;
+      console.log(load);
+      dispath(setCommentList(!load));
     });
   }, [profile?.id]);
 

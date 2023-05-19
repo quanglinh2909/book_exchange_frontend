@@ -24,6 +24,7 @@ import { enqueueSnackbar } from "notistack";
 import { setNotify, setUser } from "@/store";
 import CommentItem from "../comment/comment-item";
 import { PATH_API } from "@/constants";
+import { setCommentList } from "@/store";
 export default function Detail(props: IDetailProps) {
   const router = useRouter();
   const { idBook } = router.query;
@@ -32,21 +33,33 @@ export default function Detail(props: IDetailProps) {
   const [isOrder, setIsOrder] = useState(false);
   const [description, setDescription] = useState("");
   const [comment, setComment] = useState("");
-  const [listComment, setListComment] = useState<any>([]);
   const [expand, setExpand] = useState<boolean | undefined>();
-  const user = useSelector((state: any) => state.user);
   const dispath = useDispatch();
   const notify = useSelector((state: any) => state.notify.listNotify);
+  const commentList = useSelector((state: any) => state.comment);
+
+  const [listComment, setListComment] = useState([]);
+  const [isOwner, setIsOwner] = useState(false);
   useEffect(() => {
+    console.log("first");
     if (idBook === undefined) {
       return;
     }
     const fetch = async () => {
       const { data } = await generalApi.getBook(Number(idBook));
-      console.log(data);
+      setListComment(data.listComment);
       const { data: listNotify } = await generalApi.getAllNotify(
         data.userCreate.id
       );
+      const { data: profile } = await generalApi.profile();
+
+      const { data: listBook } = await generalApi.getAllBookUser(profile.id);
+      console.log(listBook, "books");
+      if (listBook.filter((i: any) => i.bookId === data.bookId).length > 0) {
+        console.log("ok");
+        setIsOwner(true);
+      }
+      console.log(data.userCreate.id);
       if (
         listNotify.filter((i: any) => i.book.bookId === data.bookId).length > 0
       ) {
@@ -54,14 +67,11 @@ export default function Detail(props: IDetailProps) {
       }
       setData(data);
     };
-    const setData = (data: any) => {
+    const setData = async (data: any) => {
       setBook(data);
-      console.log(data);
-      console.log(user);
-      setListComment(data.listComment);
-      if (
-        user.follows.filter((b: any) => b.bookId === data.bookId).length > 0
-      ) {
+
+      const { data: follows } = await generalApi.getFollows();
+      if (follows.filter((b: any) => b.bookId === data.bookId).length > 0) {
         setIsFavorite(true);
       }
       setDescription(
@@ -72,7 +82,7 @@ export default function Detail(props: IDetailProps) {
       setExpand(data.bookDescribe.length > 500 ? false : undefined);
     };
     fetch();
-  }, [idBook]);
+  }, [idBook, commentList.isReload]);
 
   const onClickShow = () => {
     setDescription(book.bookDescribe.replace("&nbsp;", " "));
@@ -97,14 +107,10 @@ export default function Detail(props: IDetailProps) {
     try {
       const { data } = await generalApi.createComment(payload);
       if (data && data.errors == null) {
-        console.log(data);
-        console.log(listComment);
-        setListComment([...listComment, data]);
-
         setComment("");
       }
     } catch (error: any) {
-      const { errors } = error.response.data;
+      const { errors } = error?.response.data;
       let message = "";
       for (const key in errors) {
         message += errors[key];
@@ -268,59 +274,61 @@ export default function Detail(props: IDetailProps) {
                   </Typography>
                 ))}
             </Stack>
-            <Stack sx={{ flexDirection: "row", marginTop: "16px" }}>
-              {isOrder ? (
+            {!isOwner && (
+              <Stack sx={{ flexDirection: "row", marginTop: "16px" }}>
+                {isOrder ? (
+                  <Button
+                    sx={{
+                      backgroundColor: "#222 !important",
+                      color: "#fff",
+                      textTransform: "none",
+                      fontWeight: "100",
+                      "&:hover": {
+                        backgroundColor: "#000 !important",
+                      },
+                    }}
+                  >
+                    Đã yêu cầu
+                  </Button>
+                ) : (
+                  <Button
+                    sx={{
+                      backgroundColor: "#222 !important",
+                      color: "#fff",
+                      textTransform: "none",
+                      fontWeight: "100",
+                      "&:hover": {
+                        backgroundColor: "#000 !important",
+                      },
+                    }}
+                    onClick={createNotify}
+                  >
+                    Yêu cầu đổi sách
+                  </Button>
+                )}
                 <Button
-                  sx={{
-                    backgroundColor: "#222 !important",
-                    color: "#fff",
-                    textTransform: "none",
-                    fontWeight: "100",
-                    "&:hover": {
-                      backgroundColor: "#000 !important",
-                    },
+                  endIcon={<FavoriteIcon />}
+                  onClick={() => {
+                    isfavorite ? unfavorite() : favorite();
                   }}
-                >
-                  Đã yêu cầu
-                </Button>
-              ) : (
-                <Button
                   sx={{
-                    backgroundColor: "#222 !important",
-                    color: "#fff",
-                    textTransform: "none",
-                    fontWeight: "100",
-                    "&:hover": {
-                      backgroundColor: "#000 !important",
-                    },
-                  }}
-                  onClick={createNotify}
-                >
-                  Yêu cầu đổi sách
-                </Button>
-              )}
-              <Button
-                endIcon={<FavoriteIcon />}
-                onClick={() => {
-                  isfavorite ? unfavorite() : favorite();
-                }}
-                sx={{
-                  backgroundColor: isfavorite
-                    ? "#f16464 !important"
-                    : "#ed9191 !important",
+                    backgroundColor: isfavorite
+                      ? "#f16464 !important"
+                      : "#ed9191 !important",
 
-                  "& svg": {
-                    color: isfavorite ? "#ff0101" : "#fff",
-                  },
-                  color: "#fff",
-                  textTransform: "none",
-                  fontWeight: "100",
-                  marginLeft: "5px",
-                }}
-              >
-                Yêu thích
-              </Button>
-            </Stack>
+                    "& svg": {
+                      color: isfavorite ? "#ff0101" : "#fff",
+                    },
+                    color: "#fff",
+                    textTransform: "none",
+                    fontWeight: "100",
+                    marginLeft: "5px",
+                  }}
+                >
+                  Yêu thích
+                </Button>
+              </Stack>
+            )}
           </Stack>
         </Grid>
       </Grid>
@@ -339,9 +347,9 @@ export default function Detail(props: IDetailProps) {
         >
           <Stack sx={{ color: "#000", fontWeight: "600" }}>
             <Stack sx={{ maxHeight: "450px", overflow: "auto" }}>
-              {listComment.map((item: any, index: number) => (
-                <CommentItem key={index} comment={item} />
-              ))}
+              {listComment.map((item: any, index: number) => {
+                return <CommentItem key={index} comment={item} />;
+              })}
             </Stack>
             <Stack
               sx={{
